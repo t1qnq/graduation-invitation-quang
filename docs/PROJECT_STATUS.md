@@ -47,6 +47,6 @@ git diff --check
 
 ## Notes For Future Work
 
-- A CSP is intentionally not added yet because the page still uses inline CSS/JS and Google Fonts. Adding a meaningful CSP would require either hashes/nonces or moving assets into separate files.
+- CSS and JS are now external files (`style.css` / `app.js`), so a meaningful Content-Security-Policy is feasible without inline hashes/nonces. A CSP is the recommended next security step (see `docs/DEPLOYMENT.md`); it is intentionally out of scope for this pass.
 - The Formspree endpoint is public in client code, which is normal for static forms but means quota/spam monitoring must happen in Formspree.
 - Do not remove the local tests when doing visual-only edits; they protect previous production issues.

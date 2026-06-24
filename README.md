@@ -28,7 +28,9 @@ git diff --check
 ## Current Context
 
 - Agent handoff: `AGENTS.md`
+- Project status: `docs/PROJECT_STATUS.md`
 - Architecture: `docs/ARCHITECTURE.md`
+- Product requirements: `PRD-graduation-invitation.md`
 - Active spec: `docs/superpowers/specs/2026-06-24-project-optimization-design.md`
 - Active plan: `docs/superpowers/plans/2026-06-24-project-optimization.md`
 - Version history: `CHANGELOG.md`
