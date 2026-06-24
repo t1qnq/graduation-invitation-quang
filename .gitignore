@@ -1,0 +1,12 @@
+# Local tooling and generated files
+.claude/settings.local.json
+.superpowers/
+__pycache__/
+*.py[cod]
+*.stackdump
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+

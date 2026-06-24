@@ -1,3 +1,9 @@
+# Historical Plan
+
+This was the original implementation plan from 2026-06-09. Current project handoff and status live in `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/PROJECT_STATUS.md`, and `docs/superpowers/plans/2026-06-11-project-optimization-context.md`.
+
+---
+
 # Implementation Plan — Thiệp Mời Tốt Nghiệp V1
 
 > **Ngày:** 2026-06-09
