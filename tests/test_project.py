@@ -168,6 +168,13 @@ class GraduationInvitationChecks(unittest.TestCase):
         # 6c: defensive name-length cap at submit.
         self.assertIn('.trim().slice(0, 100)', self.js)
 
+    def test_deploy_prep_artifacts_exist(self):
+        self.assertTrue((ROOT / ".nojekyll").is_file())
+        self.assertTrue((ROOT / "docs" / "DEPLOYMENT.md").is_file())
+        deployment = (ROOT / "docs" / "DEPLOYMENT.md").read_text(encoding="utf-8-sig")
+        self.assertIn("quang-grad-2026.xyz", deployment)
+        self.assertIn("canonical", deployment)
+
     def test_obsolete_patch_scripts_and_crash_dump_are_removed(self):
         obsolete_paths = [
             "apply_fixes.py",

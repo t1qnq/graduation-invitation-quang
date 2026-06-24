@@ -3,7 +3,7 @@
 This file is the single source of truth for version numbers. Format loosely
 follows [Keep a Changelog](https://keepachangelog.com/).
 
-## [Unreleased] — v2.2 (in progress)
+## [Unreleased] — v2.2
 
 Optimization & workflow-consistency pass.
 
@@ -11,9 +11,10 @@ Optimization & workflow-consistency pass.
 - Honeypot `_gotcha` is now appended to the submitted `FormData` so Formspree's
   server-side spam filter sees it (client-side check retained).
 - Accessibility: skip-link to the RSVP form, `aria-hidden` on decorative detail
-  icons, `aria-describedby` hints for the name and message fields, focusable
-  radio cards for keyboard arrow navigation, and an instant (no-delay) envelope
-  open under `prefers-reduced-motion`.
+  icons, `aria-describedby` hints for the name and message fields,
+  `tabindex="-1"` on the radio-card labels so keyboard focus lands on the radio
+  inputs, and an instant (no-delay) envelope open under
+  `prefers-reduced-motion`.
 - Performance: `preconnect` to the Google Fonts origins; fewer background
   particles on small viewports.
 - Robustness: guest name is capped at 100 characters on submit.
