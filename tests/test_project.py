@@ -11,11 +11,15 @@ class GraduationInvitationChecks(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.html = HTML_PATH.read_text(encoding="utf-8-sig")
+        cls.css = (ROOT / "style.css").read_text(encoding="utf-8-sig")
+        cls.js = (ROOT / "app.js").read_text(encoding="utf-8-sig")
+        # Combined source for pattern checks where file location is irrelevant.
+        cls.source = "\n".join([cls.html, cls.css, cls.js])
 
     def test_submit_controls_are_declared_before_validation_returns(self):
         function = re.search(
             r"async function submitRSVP\(e\) \{(?P<body>.*?)\n    \}",
-            self.html,
+            self.source,
             re.DOTALL,
         )
         self.assertIsNotNone(function)
@@ -27,8 +31,8 @@ class GraduationInvitationChecks(unittest.TestCase):
         self.assertLess(declaration, message_validation)
 
     def test_long_invite_starts_at_top_and_cannot_overflow_horizontally(self):
-        invite_rule = re.search(r"#screen-invite\s*\{(?P<body>.*?)\}", self.html, re.DOTALL)
-        wrapper_rule = re.search(r"\.invite-wrapper\s*\{(?P<body>.*?)\}", self.html, re.DOTALL)
+        invite_rule = re.search(r"#screen-invite\s*\{(?P<body>.*?)\}", self.source, re.DOTALL)
+        wrapper_rule = re.search(r"\.invite-wrapper\s*\{(?P<body>.*?)\}", self.source, re.DOTALL)
         self.assertIsNotNone(invite_rule)
         self.assertIsNotNone(wrapper_rule)
         self.assertIn("justify-content: flex-start", invite_rule.group("body"))
@@ -38,30 +42,30 @@ class GraduationInvitationChecks(unittest.TestCase):
 
     def test_screen_switching_manages_inert_state_and_focus(self):
         self.assertRegex(
-            self.html,
+            self.source,
             r'id="screen-invite"[^>]*aria-hidden="true"[^>]*inert',
         )
         self.assertRegex(
-            self.html,
+            self.source,
             r'id="screen-thanks"[^>]*aria-hidden="true"[^>]*inert',
         )
-        self.assertIn("s.inert = true", self.html)
-        self.assertIn("target.inert = false", self.html)
-        self.assertIn("data-screen-focus", self.html)
+        self.assertIn("s.inert = true", self.source)
+        self.assertIn("target.inert = false", self.source)
+        self.assertIn("data-screen-focus", self.source)
         self.assertRegex(
-            self.html,
+            self.source,
             r"setTimeout\(\(\) => \{\s*target\.querySelector\('\[data-screen-focus\]'\)"
             r"\?\.focus\(\{ preventScroll: true \}\);",
         )
 
     def test_honeypot_is_hidden_from_assistive_technology(self):
         self.assertRegex(
-            self.html,
+            self.source,
             r'name="_gotcha"[^>]*hidden[^>]*aria-hidden="true"',
         )
 
     def test_guest_query_parameter_is_not_decoded_twice(self):
-        self.assertNotIn("decodeURIComponent(guest)", self.html)
+        self.assertNotIn("decodeURIComponent(guest)", self.source)
 
     def test_social_preview_asset_exists(self):
         match = re.search(r'<meta property="og:image" content="[^"]*/([^/"]+)">', self.html)
@@ -73,29 +77,29 @@ class GraduationInvitationChecks(unittest.TestCase):
         self.assertTrue((ROOT / ".gitignore").is_file())
 
     def test_interactions_are_bound_without_inline_event_attributes(self):
-        self.assertNotRegex(self.html, r"\sonclick=")
-        self.assertNotRegex(self.html, r"\sonsubmit=")
+        self.assertNotRegex(self.source, r"\sonclick=")
+        self.assertNotRegex(self.source, r"\sonsubmit=")
         self.assertRegex(
-            self.html,
+            self.source,
             r"querySelector\('\.envelope-btn'\).*?addEventListener\('click', openEnvelope\)",
         )
         self.assertRegex(
-            self.html,
+            self.source,
             r"getElementById\('rsvp-form'\).*?addEventListener\('submit', submitRSVP\)",
         )
 
     def test_repeat_rsvp_guard_is_configured_for_sixty_seconds(self):
-        self.assertIn("const RSVP_REPEAT_WINDOW_MS = 60000", self.html)
-        self.assertIn("Bạn vừa gửi xác nhận", self.html)
+        self.assertIn("const RSVP_REPEAT_WINDOW_MS = 60000", self.source)
+        self.assertIn("Bạn vừa gửi xác nhận", self.source)
 
     def test_low_contrast_helper_text_and_status_are_accessible(self):
-        optional_rule = re.search(r"\.form-group \.optional\s*\{(?P<body>.*?)\}", self.html, re.DOTALL)
+        optional_rule = re.search(r"\.form-group \.optional\s*\{(?P<body>.*?)\}", self.source, re.DOTALL)
         placeholder_rule = re.search(
             r"\.form-group input::placeholder,\s*\.form-group textarea::placeholder\s*\{(?P<body>.*?)\}",
-            self.html,
+            self.source,
             re.DOTALL,
         )
-        banner_rule = re.search(r"\.sent-banner\s*\{(?P<body>.*?)\}", self.html, re.DOTALL)
+        banner_rule = re.search(r"\.sent-banner\s*\{(?P<body>.*?)\}", self.source, re.DOTALL)
         self.assertIsNotNone(optional_rule)
         self.assertIsNotNone(placeholder_rule)
         self.assertIsNotNone(banner_rule)
@@ -103,7 +107,7 @@ class GraduationInvitationChecks(unittest.TestCase):
         self.assertIn("rgba(255, 255, 255, .5)", placeholder_rule.group("body"))
         self.assertIn("rgba(255, 255, 255, .7)", banner_rule.group("body"))
         self.assertRegex(
-            self.html,
+            self.source,
             r'id="sent-banner"[^>]*role="status"[^>]*aria-live="polite"',
         )
 
@@ -123,6 +127,16 @@ class GraduationInvitationChecks(unittest.TestCase):
         changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8-sig")
         self.assertIn("[Unreleased]", changelog)
         self.assertRegex(changelog, r"## \[")
+
+    def test_styles_and_script_are_external(self):
+        self.assertTrue((ROOT / "style.css").is_file())
+        self.assertTrue((ROOT / "app.js").is_file())
+        html = HTML_PATH.read_text(encoding="utf-8-sig")
+        self.assertIn('<link rel="stylesheet" href="style.css">', html)
+        self.assertIn('<script src="app.js" defer></script>', html)
+        # No inline style/script blocks remain in the markup.
+        self.assertNotIn("<style>", html)
+        self.assertNotIn("<script>", html)
 
     def test_obsolete_patch_scripts_and_crash_dump_are_removed(self):
         obsolete_paths = [

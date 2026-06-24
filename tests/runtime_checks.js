@@ -2,9 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 
-const html = fs.readFileSync('index.html', 'utf8');
-const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
-assert.ok(scripts.length, 'Expected an inline application script');
+const appSource = fs.readFileSync('app.js', 'utf8');
 
 function classList() {
   const values = new Set();
@@ -114,7 +112,7 @@ const context = vm.createContext({
   window: { location: { search: '?guest=Nh%C3%B3m%20100%25' } }
 });
 
-vm.runInContext(scripts.at(-1)[1], context, { filename: 'index.html' });
+vm.runInContext(appSource, context, { filename: 'app.js' });
 
 context.showScreen('screen-invite');
 assert.equal(envelopeScreen.inert, true, 'Hidden screen should become inert');

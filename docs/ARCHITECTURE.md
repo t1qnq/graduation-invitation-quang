@@ -2,13 +2,15 @@
 
 ## Overview
 
-This project is a static invitation site. There is no package manager, build step, router, database, or custom backend. The production surface is primarily `index.html` plus the social preview image.
+This project is a static invitation site. There is no package manager, build step, router, database, or custom backend. The production surface is `index.html`, `style.css`, `app.js`, plus the social preview image.
 
 ## Files
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | Single-page app: markup, CSS, and vanilla JavaScript. |
+| `index.html` | Markup and screen structure (no inline CSS/JS). |
+| `style.css` | All styles. |
+| `app.js` | Vanilla JavaScript application logic, loaded with `defer`. |
 | `preview.png` | Open Graph/social preview image. |
 | `README.md` | Quick start and verification commands. |
 | `AGENTS.md` | Handoff context for future agents. |
