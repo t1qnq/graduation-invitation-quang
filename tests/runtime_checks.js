@@ -1,0 +1,152 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+
+const html = fs.readFileSync('index.html', 'utf8');
+const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+assert.ok(scripts.length, 'Expected an inline application script');
+
+function classList() {
+  const values = new Set();
+  return {
+    add(value) { values.add(value); },
+    remove(value) { values.delete(value); },
+    contains(value) { return values.has(value); }
+  };
+}
+
+const focusTarget = {
+  focused: false,
+  focus(options) {
+    this.focused = true;
+    this.options = options;
+  }
+};
+
+function screen(id) {
+  return {
+    id,
+    classList: classList(),
+    inert: false,
+    scrollTop: 99,
+    attributes: new Map(),
+    setAttribute(name, value) { this.attributes.set(name, value); },
+    removeAttribute(name) { this.attributes.delete(name); },
+    querySelector(selector) {
+      return selector === '[data-screen-focus]' ? focusTarget : null;
+    }
+  };
+}
+
+const envelopeScreen = screen('screen-envelope');
+const inviteScreen = screen('screen-invite');
+const thanksScreen = screen('screen-thanks');
+envelopeScreen.classList.add('active');
+
+const nameInput = { value: '' };
+const guestCount = { value: '1' };
+const messageInput = { value: 'a'.repeat(501) };
+const errorName = { textContent: '' };
+const errorSubmit = { textContent: '' };
+const sentBanner = { style: { display: 'none' } };
+const buttonText = { textContent: 'Gửi xác nhận' };
+const submitButton = {
+  disabled: false,
+  querySelector(selector) {
+    return selector === '.btn-text' ? buttonText : null;
+  }
+};
+
+const elements = {
+  'screen-envelope': envelopeScreen,
+  'screen-invite': inviteScreen,
+  'screen-thanks': thanksScreen,
+  'rsvp-name': nameInput,
+  'guest-count': guestCount,
+  'rsvp-message': messageInput,
+  'error-name': errorName,
+  'error-submit': errorSubmit,
+  'sent-banner': sentBanner,
+  'btn-submit': submitButton
+};
+
+const storage = new Map();
+let fetchCount = 0;
+
+class FakeFormData {
+  constructor() { this.values = new Map(); }
+  append(name, value) { this.values.set(name, value); }
+}
+
+const documentStub = {
+  addEventListener() {},
+  getElementById(id) { return elements[id] || null; },
+  querySelectorAll(selector) {
+    if (selector === '.screen') return [envelopeScreen, inviteScreen, thanksScreen];
+    return [];
+  },
+  querySelector(selector) {
+    if (selector.includes('attendance')) return { value: 'yes' };
+    if (selector.includes('_gotcha')) return { value: '' };
+    return null;
+  },
+  body: { appendChild() {} },
+  createElement() { return { classList: classList(), style: {}, setAttribute() {}, appendChild() {} }; }
+};
+
+const context = vm.createContext({
+  AbortController,
+  URLSearchParams,
+  console: { error() {} },
+  document: documentStub,
+  FormData: FakeFormData,
+  fetch: async () => {
+    fetchCount += 1;
+    return { ok: false, status: 500 };
+  },
+  localStorage: {
+    getItem(key) { return storage.has(key) ? storage.get(key) : null; },
+    setItem(key, value) { storage.set(key, value); }
+  },
+  requestAnimationFrame(callback) { callback(); },
+  setTimeout(callback) { callback(); return 1; },
+  clearTimeout() {},
+  window: { location: { search: '?guest=Nh%C3%B3m%20100%25' } }
+});
+
+vm.runInContext(scripts.at(-1)[1], context, { filename: 'index.html' });
+
+context.showScreen('screen-invite');
+assert.equal(envelopeScreen.inert, true, 'Hidden screen should become inert');
+assert.equal(inviteScreen.inert, false, 'Visible screen should not be inert');
+assert.equal(inviteScreen.scrollTop, 0, 'Visible screen should reset its scroll position');
+assert.equal(focusTarget.focused, true, 'Visible screen heading should receive focus');
+assert.equal(focusTarget.options.preventScroll, true);
+
+context.prefillNameFromURL();
+assert.equal(nameInput.value, 'Nhóm 100%', 'Guest query parameter should be decoded exactly once');
+
+context.submitRSVP({ preventDefault() {} }).then(() => {
+  assert.equal(errorSubmit.textContent, 'Lời chúc không quá 500 ký tự');
+  assert.equal(submitButton.disabled, false, 'Validation should return before loading state');
+
+  nameInput.value = 'Test Guest';
+  messageInput.value = '';
+  storage.set('grad_rsvp_test_guest', JSON.stringify({
+    sent: true,
+    timestamp: new Date().toISOString(),
+    attendance: 'yes'
+  }));
+
+  return context.submitRSVP({ preventDefault() {} });
+}).then(() => {
+  assert.equal(fetchCount, 0, 'First repeat submit within 60 seconds should only warn');
+  assert.match(errorSubmit.textContent, /vừa gửi xác nhận/);
+  return context.submitRSVP({ preventDefault() {} });
+}).then(() => {
+  assert.equal(fetchCount, 1, 'Second explicit repeat submit should continue');
+  console.log('Runtime checks passed');
+}).catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
