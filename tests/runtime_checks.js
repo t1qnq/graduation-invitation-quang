@@ -156,6 +156,15 @@ context.submitRSVP({ preventDefault() {} }).then(() => {
   assert.ok(lastFetchBody, 'Expected fetch to receive a FormData body');
   assert.ok(lastFetchBody.values.has('_gotcha'), 'Expected _gotcha to be appended to the submitted FormData');
 
+  // Name length is capped at 100 chars on submit (fresh path: a name that
+  // hasn't been stored, so the 60s repeat guard does not trip).
+  nameInput.value = 'a'.repeat(200);
+  messageInput.value = '';
+  return context.submitRSVP({ preventDefault() {} });
+}).then(() => {
+  assert.equal(fetchCount, 2, 'Long-name submit should reach fetch');
+  assert.equal(lastFetchBody.values.get('name').length, 100, 'Submitted name should be capped at 100 chars');
+
   // Reduced-motion: openEnvelope consults window.matchMedia and must still
   // reach the invite screen without throwing (the stub setTimeout fires
   // synchronously, so the scale/opacity animation is never observable here;

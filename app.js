@@ -40,7 +40,8 @@
     function initParticles() {
       const c = document.getElementById('bg-particles');
       if (!c) return;
-      for (let i = 0; i < 20; i++) {
+      const count = (typeof window !== 'undefined' && window.innerWidth && window.innerWidth <= 600) ? 10 : 20;
+      for (let i = 0; i < count; i++) {
         const p = document.createElement('div');
         p.className = 'bg-particle';
         p.style.left = Math.random() * 100 + '%';
@@ -209,8 +210,8 @@
       e.preventDefault();
       if (isSubmitting) return;
 
-      // Validate name
-      const name = document.getElementById('rsvp-name').value.trim();
+      // Validate name (cap length defensively, mirroring the prefill guard)
+      const name = document.getElementById('rsvp-name').value.trim().slice(0, 100);
       if (!name) {
         document.getElementById('error-name').textContent = 'Vui lòng nhập họ và tên';
         return;

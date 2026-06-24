@@ -159,6 +159,15 @@ class GraduationInvitationChecks(unittest.TestCase):
         self.assertIn("prefers-reduced-motion: reduce", self.source)
         self.assertIn("matchMedia", self.js)
 
+    def test_performance_and_robustness_hints(self):
+        # 6a: preconnect hints for the Google Fonts origins.
+        self.assertIn('rel="preconnect" href="https://fonts.googleapis.com"', self.html)
+        self.assertIn('rel="preconnect" href="https://fonts.gstatic.com" crossorigin', self.html)
+        # 6b: fewer particles on small viewports.
+        self.assertIn('window.innerWidth <= 600', self.js)
+        # 6c: defensive name-length cap at submit.
+        self.assertIn('.trim().slice(0, 100)', self.js)
+
     def test_obsolete_patch_scripts_and_crash_dump_are_removed(self):
         obsolete_paths = [
             "apply_fixes.py",
