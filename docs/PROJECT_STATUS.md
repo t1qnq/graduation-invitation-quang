@@ -1,6 +1,6 @@
 # Project Status
 
-> Last updated: 2026-06-11
+> Last updated: 2026-06-24
 
 ## Current State
 
@@ -25,6 +25,9 @@ The site is a functional static invitation with envelope opening, responsive inv
 - Event time is still unknown. Do not launch final invitations until the real time replaces `Sẽ cập nhật sau`.
 - Real Formspree delivery has not been verified from production/deployed URL.
 - Physical device testing is still pending.
+- Final domain is not confirmed. `og:image` and the canonical URL currently
+  point at `https://quang-grad-2026.xyz/`; these must be updated to the real
+  domain before launch (see `docs/DEPLOYMENT.md`).
 
 ## Safe Next Steps
 

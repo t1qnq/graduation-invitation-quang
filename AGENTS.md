@@ -6,7 +6,8 @@ This file is the first context stop for future Codex/agent sessions on this proj
 
 - Product: personal graduation invitation for Quách Ngọc Quang.
 - App type: static single-page site, no build step, no bundled dependencies.
-- Main file: `index.html` contains HTML, CSS, and vanilla JavaScript.
+- Structure: 3-file static site — `index.html` (markup), `style.css` (styles),
+  `app.js` (vanilla JavaScript, loaded with `defer`).
 - RSVP backend: Formspree endpoint in `RSVP_ENDPOINT`.
 - Social preview asset: `preview.png`.
 - Current date context: event date is `2026-07-05`; event time is not confirmed.
@@ -16,8 +17,9 @@ This file is the first context stop for future Codex/agent sessions on this proj
 1. `AGENTS.md` for working context and constraints.
 2. `docs/PROJECT_STATUS.md` for current status, blockers, and verification history.
 3. `docs/ARCHITECTURE.md` for runtime structure and data flow.
-4. `README.md` for quick start commands.
-5. `PRD-graduation-invitation.md` for product intent and acceptance criteria.
+4. `CHANGELOG.md` for version history and the current version number.
+5. `README.md` for quick start commands.
+6. `PRD-graduation-invitation.md` for product intent and acceptance criteria.
 
 Older reports in `docs/archive/` are historical. Do not treat them as current instructions unless the current docs explicitly reference them.
 
@@ -30,6 +32,15 @@ Older reports in `docs/archive/` are historical. Do not treat them as current in
 - Avoid inline event attributes. Bind interactions in the `DOMContentLoaded` initializer.
 - Keep RSVP data as `FormData`, not JSON, for Formspree compatibility.
 - Treat `localStorage` as UX-only memory. Formspree is the source of truth for actual RSVP data.
+
+## Git Workflow
+
+- Versions are tracked only in `CHANGELOG.md`. Do not put version numbers in
+  other docs except as a cross-reference to the changelog.
+- Work pattern: commit a baseline on `main`, branch (`feat/<topic>`), then open a
+  PR back into `main`. Merge only after the full verification gate passes.
+- One logical change per commit. Run the verification commands below before
+  claiming a change is complete.
 
 ## Verification Commands
 

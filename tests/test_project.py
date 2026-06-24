@@ -112,6 +112,18 @@ class GraduationInvitationChecks(unittest.TestCase):
         self.assertTrue((ROOT / "docs" / "ARCHITECTURE.md").is_file())
         self.assertTrue((ROOT / "docs" / "PROJECT_STATUS.md").is_file())
 
+    def test_docs_are_consistent_after_unification(self):
+        self.assertTrue((ROOT / "CHANGELOG.md").is_file())
+        agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8-sig")
+        self.assertIn("style.css", agents)
+        self.assertIn("app.js", agents)
+        self.assertIn("CHANGELOG.md", agents)
+        readme = (ROOT / "README.md").read_text(encoding="utf-8-sig")
+        self.assertNotIn("2026-06-11-project-optimization-context.md", readme)
+        changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8-sig")
+        self.assertIn("[Unreleased]", changelog)
+        self.assertRegex(changelog, r"## \[")
+
     def test_obsolete_patch_scripts_and_crash_dump_are_removed(self):
         obsolete_paths = [
             "apply_fixes.py",

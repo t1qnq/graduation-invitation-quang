@@ -1,6 +1,7 @@
 # PRD — Thiệp Mời Tốt Nghiệp Quách Ngọc Quang
 
 > **Phiên bản:** 2.1
+> Version history is tracked in CHANGELOG.md (current: v2.1; v2.2 in progress).
 > **Ngày tạo:** 2026-06-09
 > **Cập nhật:** 2026-06-11
 > **Trạng thái:** Implemented locally — launch pending event time confirmation, deployed Formspree test, and physical device QA
@@ -155,7 +156,7 @@ User thử lại → success → màn 3
 
 | Vai trò | Màu | Hex |
 |---------|-----|-----|
-| Background chính | Deep Navy | `#1a1a2e` |
+| Background chính | Deep Navy | `#0a0a14` |
 | Background phụ | Navy đậm | `#16213e` |
 | Accent (vàng đồng) | Metallic Gold | `#e2b04a` |
 | Text chính | Trắng | `#ffffff` |
@@ -176,7 +177,7 @@ User thử lại → success → màn 3
 | "LỄ TỐT NGHIỆP" | Cormorant Garamond | 11px | 400 | 6px | #e2b04a |
 | Ngày/Địa điểm | Cormorant Garamond | 11-13px | 400 | 3px | rgba(255,255,255,0.55) |
 | Form labels | Cormorant Garamond | 12px | 400 | 2px | rgba(255,255,255,0.55) |
-| Button text | Playfair Display | 14-15px | 700 | 4px | #1a1a2e |
+| Button text | Playfair Display | 14-15px | 700 | 4px | #0a0a14 |
 | Subtitle/body | Cormorant Garamond | 14-16px | 400 | 0 | rgba(255,255,255,0.6) |
 
 ### 3.4 Animation
@@ -238,7 +239,7 @@ User thử lại → success → màn 3
 **Error state:**
 - Message: "Chưa gửi được xác nhận, bạn thử lại giúp mình nhé."
 - Style: text màu đỏ, nhẹ nhàng, không alarming
-- Button đổi thành "Thử lại"
+- Khi gặp lỗi, button được enable lại và khôi phục về nhãn ban đầu để khách thử gửi lại
 
 ### 4.3 Màn 3: Cảm ơn
 
@@ -331,8 +332,8 @@ formData.append('guestCount', 2);     // 0 nếu attendance = 'no'
 formData.append('message', 'Chúc Quang thi tốt!');
 formData.append('timestamp', new Date().toISOString());
 
-// Honeypot _gotcha được kiểm tra ở client trước khi tạo FormData.
-// Code hiện tại không append _gotcha vào payload gửi đi.
+// `_gotcha` is checked client-side (empty-string early return) and appended to
+// the submitted `FormData`, so Formspree's server-side spam filter also sees it.
 
 // Response xử lý
 - 200 OK → success → màn 3

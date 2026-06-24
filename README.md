@@ -29,11 +29,9 @@ git diff --check
 
 - Agent handoff: `AGENTS.md`
 - Architecture: `docs/ARCHITECTURE.md`
-- Launch/status checklist: `docs/PROJECT_STATUS.md`
-- Product requirements: `PRD-graduation-invitation.md`
-- Current optimization plan: `docs/superpowers/plans/2026-06-11-project-optimization-context.md`
-
-Historical reports are kept under `docs/archive/` when they are no longer the source of truth.
+- Active spec: `docs/superpowers/specs/2026-06-24-project-optimization-design.md`
+- Active plan: `docs/superpowers/plans/2026-06-24-project-optimization.md`
+- Version history: `CHANGELOG.md`
 
 ## Launch Blockers
 
