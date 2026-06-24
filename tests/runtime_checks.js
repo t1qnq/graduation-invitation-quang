@@ -70,6 +70,7 @@ const elements = {
 
 const storage = new Map();
 let fetchCount = 0;
+let lastFetchBody = null;
 
 class FakeFormData {
   constructor() { this.values = new Map(); }
@@ -98,8 +99,9 @@ const context = vm.createContext({
   console: { error() {} },
   document: documentStub,
   FormData: FakeFormData,
-  fetch: async () => {
+  fetch: async (url, options) => {
     fetchCount += 1;
+    lastFetchBody = options && options.body ? options.body : null;
     return { ok: false, status: 500 };
   },
   localStorage: {
@@ -143,6 +145,8 @@ context.submitRSVP({ preventDefault() {} }).then(() => {
   return context.submitRSVP({ preventDefault() {} });
 }).then(() => {
   assert.equal(fetchCount, 1, 'Second explicit repeat submit should continue');
+  assert.ok(lastFetchBody, 'Expected fetch to receive a FormData body');
+  assert.ok(lastFetchBody.values.has('_gotcha'), 'Expected _gotcha to be appended to the submitted FormData');
   console.log('Runtime checks passed');
 }).catch((error) => {
   console.error(error);

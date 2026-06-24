@@ -258,7 +258,8 @@
         formData.append('guestCount', guestCount);
         formData.append('message', message);
         formData.append('timestamp', new Date().toISOString());
-        // Không append _gotcha; hidden input được check ở client trước khi gửi.
+        // Gửi _gotcha để Formspree cũng lọc spam phía server (đã check rỗng ở trên).
+        formData.append('_gotcha', gotcha ?? '');
 
         const response = await fetchWithTimeout(RSVP_ENDPOINT, {
           method: 'POST',
