@@ -41,7 +41,7 @@ const inviteScreen = screen('screen-invite');
 const thanksScreen = screen('screen-thanks');
 envelopeScreen.classList.add('active');
 
-const nameInput = { value: '' };
+const nameInput = { value: '', addEventListener() {} };
 const guestCount = { value: '1' };
 const messageInput = { value: 'a'.repeat(501) };
 const errorName = { textContent: '' };
@@ -69,6 +69,7 @@ const elements = {
 };
 
 const storage = new Map();
+let reduceMotion = false;
 let fetchCount = 0;
 let lastFetchBody = null;
 
@@ -76,6 +77,8 @@ class FakeFormData {
   constructor() { this.values = new Map(); }
   append(name, value) { this.values.set(name, value); }
 }
+
+const envelopeNode = { style: {} };
 
 const documentStub = {
   addEventListener() {},
@@ -87,6 +90,7 @@ const documentStub = {
   querySelector(selector) {
     if (selector.includes('attendance')) return { value: 'yes' };
     if (selector.includes('_gotcha')) return { value: '' };
+    if (selector === '.envelope') return envelopeNode;
     return null;
   },
   body: { appendChild() {} },
@@ -111,7 +115,11 @@ const context = vm.createContext({
   requestAnimationFrame(callback) { callback(); },
   setTimeout(callback) { callback(); return 1; },
   clearTimeout() {},
-  window: { location: { search: '?guest=Nh%C3%B3m%20100%25' } }
+  // openEnvelope consults prefers-reduced-motion via matchMedia; toggle via reduceMotion.
+  window: {
+    location: { search: '?guest=Nh%C3%B3m%20100%25' },
+    matchMedia: (query) => ({ matches: reduceMotion && /reduce/.test(query) })
+  }
 });
 
 vm.runInContext(appSource, context, { filename: 'app.js' });
@@ -147,6 +155,16 @@ context.submitRSVP({ preventDefault() {} }).then(() => {
   assert.equal(fetchCount, 1, 'Second explicit repeat submit should continue');
   assert.ok(lastFetchBody, 'Expected fetch to receive a FormData body');
   assert.ok(lastFetchBody.values.has('_gotcha'), 'Expected _gotcha to be appended to the submitted FormData');
+
+  // Reduced-motion: openEnvelope consults window.matchMedia and must still
+  // reach the invite screen without throwing (the stub setTimeout fires
+  // synchronously, so the scale/opacity animation is never observable here;
+  // the prefers-reduced-motion source guard is asserted by the Python tests).
+  reduceMotion = true;
+  inviteScreen.classList.remove('active');
+  context.openEnvelope();
+  assert.equal(inviteScreen.classList.contains('active'), true, 'Reduced motion should still reach the invite screen');
+
   console.log('Runtime checks passed');
 }).catch((error) => {
   console.error(error);

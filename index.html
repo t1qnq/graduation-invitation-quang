@@ -47,6 +47,7 @@
   ============================================================ -->
   <div id="screen-invite" class="screen" role="region" aria-label="Thiệp mời và form xác nhận tham dự"
     aria-hidden="true" inert>
+    <a class="skip-link" href="#rsvp-form">Bỏ qua tới biểu mẫu xác nhận</a>
     <div class="invite-wrapper" id="invite-wrapper">
       <!-- Header -->
       <span class="inv-emoji" aria-hidden="true">🎓</span>
@@ -63,22 +64,22 @@
       <!-- Details -->
       <div class="inv-details">
         <div class="inv-detail">
-          <span class="detail-icon">📅</span>
+          <span class="detail-icon" aria-hidden="true">📅</span>
           <span class="detail-label">Ngày</span>
           <span class="detail-value">05 / 07 / 2026</span>
         </div>
         <div class="inv-detail">
-          <span class="detail-icon">📍</span>
+          <span class="detail-icon" aria-hidden="true">📍</span>
           <span class="detail-label">Địa điểm</span>
           <span class="detail-value">Hội trường Nguyễn Văn Đạo</span>
         </div>
         <div class="inv-detail">
-          <span class="detail-icon">🕐</span>
+          <span class="detail-icon" aria-hidden="true">🕐</span>
           <span class="detail-label">Giờ</span>
           <span class="detail-value">Sẽ cập nhật sau</span>
         </div>
         <div class="inv-detail">
-          <span class="detail-icon">🎓</span>
+          <span class="detail-icon" aria-hidden="true">🎓</span>
           <span class="detail-label">Sự kiện</span>
           <span class="detail-value">Lễ Tốt Nghiệp</span>
         </div>
@@ -92,7 +93,8 @@
         <!-- Name -->
         <div class="form-group">
           <label for="rsvp-name">Họ và tên</label>
-          <input type="text" id="rsvp-name" name="name" required placeholder="Nhập họ và tên..." autocomplete="name">
+          <input type="text" id="rsvp-name" name="name" required placeholder="Nhập họ và tên..." autocomplete="name" aria-describedby="name-hint">
+          <span class="sr-only" id="name-hint">Vui lòng nhập họ và tên đầy đủ của bạn.</span>
           <span class="form-error" id="error-name" role="alert"></span>
         </div>
 
@@ -100,11 +102,11 @@
         <div class="form-group">
           <label>Tham dự</label>
           <div class="radio-group" role="radiogroup" aria-label="Xác nhận tham dự">
-            <label class="radio-card selected" data-value="yes">
+            <label class="radio-card selected" data-value="yes" tabindex="-1">
               <input type="radio" name="attendance" value="yes" checked>
               <span>Có</span>
             </label>
-            <label class="radio-card" data-value="no">
+            <label class="radio-card" data-value="no" tabindex="-1">
               <input type="radio" name="attendance" value="no">
               <span>Không</span>
             </label>
@@ -127,7 +129,8 @@
         <div class="form-group">
           <label for="rsvp-message">Lời chúc <span class="optional">(tùy chọn)</span></label>
           <textarea id="rsvp-message" name="message" rows="2" maxlength="500"
-            placeholder="Chúc Quang..."></textarea>
+            placeholder="Chúc Quang..." aria-describedby="message-hint"></textarea>
+          <span class="sr-only" id="message-hint">Tối đa 500 ký tự. Đây là mục tùy chọn.</span>
         </div>
 
         <!-- Submit -->

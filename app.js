@@ -92,10 +92,15 @@
       if (isAnimating) return;
       isAnimating = true;
 
+      const reduceMotion = typeof window.matchMedia === 'function'
+        && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       const envelope = document.querySelector('.envelope');
-      envelope.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1), opacity .6s ease';
-      envelope.style.transform = 'scale(0.3)';
-      envelope.style.opacity = '0';
+      if (!reduceMotion) {
+        envelope.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1), opacity .6s ease';
+        envelope.style.transform = 'scale(0.3)';
+        envelope.style.opacity = '0';
+      }
 
       setTimeout(() => {
         showScreen('screen-invite');
@@ -105,7 +110,7 @@
         envelope.style.transform = '';
         envelope.style.opacity = '';
         isAnimating = false;
-      }, 600);
+      }, reduceMotion ? 0 : 600);
     }
 
     // ================================================================

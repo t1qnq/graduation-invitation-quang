@@ -138,6 +138,27 @@ class GraduationInvitationChecks(unittest.TestCase):
         self.assertNotIn("<style>", html)
         self.assertNotIn("<script>", html)
 
+    def test_accessibility_enhancements_are_present(self):
+        # 5c-1: skip link into the invite screen, targeting the form.
+        self.assertIn('class="skip-link" href="#rsvp-form"', self.html)
+        self.assertIn(".skip-link", self.css)
+        self.assertIn(".sr-only", self.css)
+        # 5c-2: all four decorative detail icons are hidden from AT.
+        self.assertEqual(
+            self.html.count('<span class="detail-icon" aria-hidden="true">'), 4
+        )
+        # 5c-3: name and message inputs linked to sr-only hints.
+        self.assertIn('aria-describedby="name-hint"', self.html)
+        self.assertIn('id="name-hint"', self.html)
+        self.assertIn('aria-describedby="message-hint"', self.html)
+        self.assertIn('id="message-hint"', self.html)
+        # 5c-4: both radio-card labels removed from the tab order.
+        self.assertEqual(self.html.count('data-value="yes" tabindex="-1"'), 1)
+        self.assertEqual(self.html.count('data-value="no" tabindex="-1"'), 1)
+        # 5c-5: reduced-motion guard in the envelope-open animation.
+        self.assertIn("prefers-reduced-motion: reduce", self.source)
+        self.assertIn("matchMedia", self.js)
+
     def test_obsolete_patch_scripts_and_crash_dump_are_removed(self):
         obsolete_paths = [
             "apply_fixes.py",
