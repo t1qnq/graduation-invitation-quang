@@ -219,6 +219,12 @@ class GraduationInvitationChecks(unittest.TestCase):
         self.assertIn("11:45", self.html)
         self.assertNotIn("Sẽ cập nhật sau", self.html)
 
+    def test_directions_button_present(self):
+        self.assertIn('id="directions-link"', self.html)
+        self.assertIn("https://www.google.com/maps/search/?api=1&query=", self.html)
+        self.assertRegex(self.html, r'id="directions-link"[^>]*target="_blank"[^>]*rel="noopener"')
+        self.assertRegex(self.css, r"\.inv-directions\s*\{")
+
 
 if __name__ == "__main__":
     unittest.main()
