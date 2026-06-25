@@ -7,9 +7,9 @@
 ## Goal
 
 Add five guest-facing features to the static graduation invitation — a countdown
-timer, background music, a directions button, a shareable QR code, and a polished
-wishes field — without introducing a build step, a backend, or any external CDN
-runtime dependency.
+timer, moment-based sound + animation effects, a directions button, a shareable
+QR code, and a polished wishes field — without introducing a build step, a
+backend, or any external CDN runtime dependency.
 
 ## Confirmed Inputs (from the user)
 
@@ -24,10 +24,11 @@ until the user provides a confirmed time." The time is now confirmed.
 
 Approach **A** (chosen): keep the existing 3-file static structure
 (`index.html` + `style.css` + `app.js`). Each feature is a self-contained,
-clearly-sectioned init function in `app.js` (`initCountdown()`, `initMusic()`,
+clearly-sectioned init function in `app.js` (`initCountdown()`, `initSound()`,
 `initShare()`), markup in `index.html`, styles in `style.css`. The only new
 third-party code is a **vendored QR library file** in `assets/` — no CDN, no
-build, works offline.
+build, works offline. The sound effects are **synthesized with the Web Audio
+API** (no audio file, no CDN).
 
 `app.js` keeps its current shape: top-level function declarations as `window`
 globals (load-bearing for `tests/runtime_checks.js`, which reads `app.js` and
@@ -37,15 +38,14 @@ called from the existing `DOMContentLoaded` handler.
 ### New / changed files
 
 - **`index.html`** — add markup: countdown block, directions button, share
-  block, a floating music toggle + an `<audio>` element. Update the Giờ detail
-  value to `10:00 – 11:45`.
-- **`style.css`** — styles for the four new blocks; respects the existing
-  `@media (prefers-reduced-motion: reduce)` block.
-- **`app.js`** — `initCountdown()`, `initMusic()`, `initShare()`; wire them into
-  `DOMContentLoaded`; trigger music start inside the existing `openEnvelope()`.
+  block, a floating sound on/off toggle, and a sparkle overlay container. Update
+  the Giờ detail value to `10:00 – 11:45`.
+- **`style.css`** — styles for the new blocks + the sparkle/celebration
+  animations; respects the existing `@media (prefers-reduced-motion: reduce)` block.
+- **`app.js`** — `initCountdown()`, `initSound()`, `initShare()`; wire them into
+  `DOMContentLoaded`; trigger the sound+animation inside the existing
+  `openEnvelope()` and on RSVP success.
 - **`assets/qrcode.min.js`** — vendored QR generator (single static file).
-- **`assets/music.mp3`** — optional; provided by the host. Absence is handled
-  gracefully (control hides).
 - **`tests/test_project.py`** — structural regex checks for the new markup/functions.
 - **`tests/runtime_checks.js`** — runtime checks for countdown math, music toggle
   state, and share init (with DOM/clipboard stubs).
@@ -65,19 +65,28 @@ called from the existing `DOMContentLoaded` handler.
   message such as `Buổi lễ đã diễn ra — cảm ơn bạn!` (no negative numbers).
 - Placed directly under the invite message, above the details grid.
 
-### 2. Background music
+### 2. Moment-based sound + animation
 
-- A single `<audio id="bg-music" loop preload="none">` pointing at
-  `assets/music.mp3`, plus a fixed-position toggle button (🔊 / 🔇).
-- **Start trigger:** inside `openEnvelope()` (the envelope click is a valid user
-  gesture, so browsers allow audio to start). Volume set low (~0.4).
-- **Reduced-motion / quiet preference:** if
-  `matchMedia('(prefers-reduced-motion: reduce)').matches`, do **not** autoplay;
-  the user can start it manually with the toggle.
-- **Mute memory:** the user's last toggle state is stored in `localStorage`
-  (UX-only memory, per project convention) and honored on next visit.
-- **Missing/failed file:** on `audio` error (e.g., 404) the toggle hides itself,
-  so a missing `music.mp3` degrades silently. The host can drop the file in later.
+Two celebratory moments get a short synthesized chime plus a brief visual effect:
+
+- **Envelope open** — a soft "ting" + a sparkle burst as the invite reveals
+  (triggered inside the existing `openEnvelope()`).
+- **RSVP success** — a brighter chime + a celebration effect when the thank-you
+  screen appears (triggered on successful submit).
+
+Details:
+- **Sound source:** synthesized with the Web Audio API (`initSound()` creates an
+  `AudioContext` lazily on first user gesture; a small `playChime(type)` helper
+  plays a short oscillator note — no audio file, no CDN). The `AudioContext` is
+  created/resumed only after a user gesture, satisfying browser autoplay policy.
+- **Sound toggle + memory:** a fixed-position 🔊/🔇 toggle mutes/unmutes the
+  chimes; the choice is stored in `localStorage` (UX-only memory) and honored on
+  return visits. When muted, the visual animation still plays.
+- **Reduced-motion:** if `matchMedia('(prefers-reduced-motion: reduce)').matches`,
+  skip the sparkle/celebration animation; the short chime may still play unless
+  muted. (Sound is not motion, but the effect must never be jarring.)
+- **No-audio fallback:** if `AudioContext` is unavailable or throws, the chime is
+  silently skipped — the visual effect and the rest of the page are unaffected.
 
 ### 3. Directions (map)
 
@@ -108,15 +117,16 @@ called from the existing `DOMContentLoaded` handler.
 
 ## Data Flow
 
-- Countdown, music, QR, and copy-link are entirely client-side; no network calls
-  except the Google Maps link the user explicitly clicks.
+- Countdown, sound/animation, QR, and copy-link are entirely client-side; no
+  network calls except the Google Maps link the user explicitly clicks.
 - RSVP submission is unchanged: `FormData` to the existing Formspree endpoint
   (not JSON). The wishes field rides along in that same `FormData` as today.
 
 ## Error Handling
 
 - Countdown: invalid constant → placeholder; past event → static message.
-- Music: file error → hide control; reduced-motion → no autoplay.
+- Sound: `AudioContext` unavailable/throws → skip chime silently; reduced-motion
+  → skip the visual animation.
 - QR: if the vendored library fails to load, the share block hides the QR area
   but keeps the copy-link button working.
 - Copy link: clipboard API failure → `execCommand` fallback → if both fail, show
@@ -134,15 +144,16 @@ called from the existing `DOMContentLoaded` handler.
 ## Testing
 
 - **`tests/test_project.py`** (Python `unittest`, structural regex): assert the
-  countdown markup + `EVENT_DATETIME` constant exist; the `<audio>` element +
-  music toggle + `initMusic` exist; the directions link points at
+  countdown markup + `EVENT_DATETIME` constant exist; the sound toggle +
+  `initSound` / `playChime` exist; the directions link points at
   `google.com/maps`; the share block + vendored `assets/qrcode.min.js` reference
   + `initShare` exist; the Giờ detail now reads `10:00 – 11:45` and the
   `Sẽ cập nhật sau` placeholder is gone.
 - **`tests/runtime_checks.js`** (Node `vm`): countdown math returns correct
   remaining units for a fixed "now"; the past-event case yields the static
-  message; music toggle flips state and persists to a `localStorage` stub; QR/
-  copy init runs without throwing under DOM/clipboard stubs.
+  message; the sound toggle flips state and persists to a `localStorage` stub,
+  and `playChime` is a no-op (does not throw) when `AudioContext` is absent from
+  the stubbed context; QR/copy init runs without throwing under DOM/clipboard stubs.
 - All existing tests must continue to pass.
 
 ## Out of Scope (deferred)
