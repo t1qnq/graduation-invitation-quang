@@ -366,13 +366,13 @@
       });
     }
 
-    function playChime(type) {
+    async function playChime(type) {
       if (soundMuted) return;
       const AC = typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext);
       if (!AC) return;
       try {
         if (!audioCtx) audioCtx = new AC();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
         const now = audioCtx.currentTime;
         const notes = type === 'success' ? [523.25, 659.25, 783.99] : [659.25, 880.0];
         notes.forEach((freq, i) => {
@@ -397,6 +397,7 @@
       if (reduceMotion) return;
       const layer = document.getElementById('sparkle-layer');
       if (!layer) return;
+      if (layer.childElementCount > 40) return;
       for (let i = 0; i < 14; i++) {
         const s = document.createElement('div');
         s.className = 'sparkle';
