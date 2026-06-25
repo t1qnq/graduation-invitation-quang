@@ -112,9 +112,12 @@ const context = vm.createContext({
     getItem(key) { return storage.has(key) ? storage.get(key) : null; },
     setItem(key, value) { storage.set(key, value); }
   },
+  navigator: { clipboard: { writeText: async () => {} } },
   requestAnimationFrame(callback) { callback(); },
   setTimeout(callback) { callback(); return 1; },
   clearTimeout() {},
+  setInterval() { return 2; },
+  clearInterval() {},
   // openEnvelope consults prefers-reduced-motion via matchMedia; toggle via reduceMotion.
   window: {
     location: { search: '?guest=Nh%C3%B3m%20100%25' },
@@ -123,6 +126,17 @@ const context = vm.createContext({
 });
 
 vm.runInContext(appSource, context, { filename: 'app.js' });
+
+// Countdown pure helper
+const future = context.computeCountdown('2026-07-05T10:00:00+07:00', Date.parse('2026-07-04T10:00:00+07:00'));
+assert.equal(future.valid, true);
+assert.equal(future.past, false);
+assert.equal(future.days, 1, 'One day before the event = 1 day remaining');
+assert.equal(future.hours, 0);
+const past = context.computeCountdown('2026-07-05T10:00:00+07:00', Date.parse('2026-07-06T10:00:00+07:00'));
+assert.equal(past.past, true, 'After the event, past should be true');
+const bad = context.computeCountdown('not-a-date', Date.now());
+assert.equal(bad.valid, false, 'Invalid datetime should be flagged invalid');
 
 context.showScreen('screen-invite');
 assert.equal(envelopeScreen.inert, true, 'Hidden screen should become inert');
@@ -173,6 +187,13 @@ context.submitRSVP({ preventDefault() {} }).then(() => {
   inviteScreen.classList.remove('active');
   context.openEnvelope();
   assert.equal(inviteScreen.classList.contains('active'), true, 'Reduced motion should still reach the invite screen');
+
+  // playChime must be a no-op (no throw) when AudioContext is absent from the context.
+  assert.doesNotThrow(() => context.playChime('open'), 'playChime should not throw without AudioContext');
+  assert.doesNotThrow(() => context.playChime('success'), 'playChime should not throw without AudioContext');
+
+  // initShare must not throw when QRCode/elements are absent from the stub context.
+  assert.doesNotThrow(() => context.initShare(), 'initShare should not throw without QRCode or share elements');
 
   console.log('Runtime checks passed');
 }).catch((error) => {

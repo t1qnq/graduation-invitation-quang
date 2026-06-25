@@ -4,6 +4,7 @@
     const RSVP_ENDPOINT = 'https://formspree.io/f/xeewzabd';
     const FETCH_TIMEOUT = 15000;
     const RSVP_REPEAT_WINDOW_MS = 60000;
+    const EVENT_DATETIME = '2026-07-05T10:00:00+07:00';
 
     // ================================================================
     // STATE
@@ -13,6 +14,8 @@
     let rsvpCheckInitialized = false;
     let repeatSubmitConfirmedKey = null;
     let activeConfetti = null;
+    let soundMuted = false;
+    let audioCtx = null;
 
     // ================================================================
     // HELPERS
@@ -92,6 +95,8 @@
     function openEnvelope() {
       if (isAnimating) return;
       isAnimating = true;
+      playChime('open');
+      sparkleBurst();
 
       const reduceMotion = typeof window.matchMedia === 'function'
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -289,6 +294,8 @@
           }
 
           createConfetti();
+          playChime('success');
+          sparkleBurst();
           setTimeout(() => showScreen('screen-thanks'), 800);
         } else {
           throw new Error('HTTP ' + response.status);
@@ -339,10 +346,179 @@
     }
 
     // ================================================================
+    // SOUND + SPARKLE (moment effects)
+    // ================================================================
+    function updateSoundToggle(toggle) {
+      toggle.textContent = soundMuted ? '🔇' : '🔊';
+      toggle.setAttribute('aria-label', soundMuted ? 'Bật âm thanh' : 'Tắt âm thanh');
+      toggle.setAttribute('aria-pressed', soundMuted ? 'true' : 'false');
+    }
+
+    function initSound() {
+      try { soundMuted = localStorage.getItem('grad_sound_muted') === '1'; } catch (e) {}
+      const toggle = document.getElementById('sound-toggle');
+      if (!toggle) return;
+      updateSoundToggle(toggle);
+      toggle.addEventListener('click', () => {
+        soundMuted = !soundMuted;
+        try { localStorage.setItem('grad_sound_muted', soundMuted ? '1' : '0'); } catch (e) {}
+        updateSoundToggle(toggle);
+      });
+    }
+
+    async function playChime(type) {
+      if (soundMuted) return;
+      const AC = typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext);
+      if (!AC) return;
+      try {
+        if (!audioCtx) audioCtx = new AC();
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const notes = type === 'success' ? [523.25, 659.25, 783.99] : [659.25, 880.0];
+        notes.forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          const start = now + i * 0.12;
+          gain.gain.setValueAtTime(0.0001, start);
+          gain.gain.exponentialRampToValueAtTime(0.25, start + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.5);
+          osc.connect(gain).connect(audioCtx.destination);
+          osc.start(start);
+          osc.stop(start + 0.55);
+        });
+      } catch (e) { /* audio unavailable — silent */ }
+    }
+
+    function sparkleBurst() {
+      const reduceMotion = typeof window.matchMedia === 'function'
+        && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) return;
+      const layer = document.getElementById('sparkle-layer');
+      if (!layer) return;
+      if (layer.childElementCount > 40) return;
+      for (let i = 0; i < 14; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.textContent = '✨';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 60 + '%';
+        s.style.animationDelay = (Math.random() * 0.3) + 's';
+        layer.appendChild(s);
+        setTimeout(() => s.remove(), 1400);
+      }
+    }
+
+    // ================================================================
+    // SHARE — QR + copy link
+    // ================================================================
+    async function copyLink(url) {
+      if (!url) return false;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+          return true;
+        }
+      } catch (e) { /* fall through to legacy path */ }
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand('copy');
+        ta.remove();
+        return ok;
+      } catch (e) { return false; }
+    }
+
+    function initShare() {
+      const url = (typeof window !== 'undefined' && window.location && window.location.href)
+        ? window.location.href : '';
+      const qrBox = document.getElementById('share-qr');
+      if (qrBox) {
+        if (url && typeof window.QRCode === 'function') {
+          try {
+            qrBox.innerHTML = '';
+            new window.QRCode(qrBox, {
+              text: url, width: 140, height: 140,
+              colorDark: '#0a0a14', colorLight: '#ffffff'
+            });
+          } catch (e) { qrBox.style.display = 'none'; }
+        } else {
+          qrBox.style.display = 'none';
+        }
+      }
+      const copyBtn = document.getElementById('share-copy');
+      const copied = document.getElementById('share-copied');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const ok = await copyLink(url);
+          if (copied) {
+            copied.textContent = ok ? 'Đã sao chép!' : 'Không sao chép được, hãy copy thủ công.';
+            setTimeout(() => { copied.textContent = ''; }, 2500);
+          }
+        });
+      }
+    }
+
+    // ================================================================
+    // COUNTDOWN
+    // ================================================================
+    function computeCountdown(targetIso, nowMs) {
+      const target = Date.parse(targetIso);
+      if (!Number.isFinite(target)) return { valid: false };
+      const diff = target - nowMs;
+      if (diff <= 0) return { valid: true, past: true };
+      const totalSec = Math.floor(diff / 1000);
+      return {
+        valid: true,
+        past: false,
+        days: Math.floor(totalSec / 86400),
+        hours: Math.floor((totalSec % 86400) / 3600),
+        mins: Math.floor((totalSec % 3600) / 60),
+        secs: totalSec % 60
+      };
+    }
+
+    function initCountdown() {
+      const box = document.getElementById('countdown');
+      const msg = document.getElementById('countdown-msg');
+      if (!box || !msg) return;
+      const pad = (n) => String(n).padStart(2, '0');
+      const render = () => {
+        const r = computeCountdown(EVENT_DATETIME, Date.now());
+        if (!r.valid) {
+          box.style.display = 'none';
+          msg.textContent = 'Sẽ cập nhật sau';
+          return true;
+        }
+        if (r.past) {
+          box.style.display = 'none';
+          msg.textContent = 'Buổi lễ đã diễn ra — cảm ơn bạn!';
+          return true;
+        }
+        document.getElementById('cd-days').textContent = pad(r.days);
+        document.getElementById('cd-hours').textContent = pad(r.hours);
+        document.getElementById('cd-mins').textContent = pad(r.mins);
+        document.getElementById('cd-secs').textContent = pad(r.secs);
+        return false;
+      };
+      if (render()) return;
+      const timer = setInterval(() => { if (render()) clearInterval(timer); }, 1000);
+    }
+
+    // ================================================================
     // INIT
     // ================================================================
     document.addEventListener('DOMContentLoaded', () => {
       initParticles();
+      initCountdown();
+      initSound();
+      initShare();
 
       // Staggered text reveal on envelope
       const envelopeText = document.querySelector('.envelope-text');

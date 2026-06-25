@@ -67,6 +67,21 @@ class GraduationInvitationChecks(unittest.TestCase):
     def test_guest_query_parameter_is_not_decoded_twice(self):
         self.assertNotIn("decodeURIComponent(guest)", self.source)
 
+    def test_sound_and_animation_present(self):
+        self.assertIn('id="sound-toggle"', self.html)
+        self.assertIn('id="sparkle-layer"', self.html)
+        self.assertIn("function initSound", self.js)
+        self.assertIn("function playChime", self.js)
+        self.assertIn("function sparkleBurst", self.js)
+        self.assertIn("AudioContext", self.js)
+        self.assertIn("grad_sound_muted", self.js)
+        self.assertIn("playChime('open')", self.js)
+        self.assertIn("playChime('success')", self.js)
+        sparkle = re.search(r"function sparkleBurst\(\)\s*\{(?P<body>.*?)\n    \}", self.js, re.DOTALL)
+        self.assertIsNotNone(sparkle)
+        self.assertIn("prefers-reduced-motion: reduce", sparkle.group("body"))
+        self.assertRegex(self.css, r"@keyframes sparkle-pop")
+
     def test_social_preview_asset_exists(self):
         match = re.search(r'<meta property="og:image" content="[^"]*/([^/"]+)">', self.html)
         self.assertIsNotNone(match)
@@ -187,6 +202,43 @@ class GraduationInvitationChecks(unittest.TestCase):
         for relative_path in obsolete_paths:
             with self.subTest(path=relative_path):
                 self.assertFalse((ROOT / relative_path).exists())
+
+    def test_countdown_is_present(self):
+        self.assertIn('id="countdown"', self.html)
+        for slot in ("cd-days", "cd-hours", "cd-mins", "cd-secs"):
+            self.assertIn(slot, self.html)
+        self.assertIn("EVENT_DATETIME = '2026-07-05T10:00:00+07:00'", self.js)
+        self.assertIn("function computeCountdown", self.js)
+        self.assertIn("function initCountdown", self.js)
+        self.assertIn("initCountdown();", self.js)
+        self.assertRegex(self.css, r"\.inv-countdown\s*\{")
+
+    def test_ceremony_time_is_set(self):
+        # The confirmed time replaces the old placeholder.
+        self.assertIn("10:00", self.html)
+        self.assertIn("11:45", self.html)
+        self.assertNotIn("Sẽ cập nhật sau", self.html)
+
+    def test_directions_button_present(self):
+        self.assertIn('id="directions-link"', self.html)
+        self.assertIn("https://www.google.com/maps/search/?api=1&query=", self.html)
+        self.assertRegex(self.html, r'id="directions-link"[^>]*target="_blank"[^>]*rel="noopener"')
+        self.assertRegex(self.css, r"\.inv-directions\s*\{")
+
+    def test_share_qr_and_copy_present(self):
+        self.assertTrue((ROOT / "assets" / "qrcode.min.js").is_file())
+        self.assertIn('<script src="assets/qrcode.min.js" defer></script>', self.html)
+        self.assertIn('id="share-qr"', self.html)
+        self.assertIn('id="share-copy"', self.html)
+        self.assertIn("function initShare", self.js)
+        self.assertIn("function copyLink", self.js)
+        self.assertIn("initShare();", self.js)
+        self.assertIn("window.location.href", self.js)
+        self.assertRegex(self.css, r"\.inv-share\s*\{")
+
+    def test_wishes_field_is_emphasized(self):
+        self.assertRegex(self.html, r'class="form-group wish-field"')
+        self.assertRegex(self.css, r"\.wish-field\s*\{")
 
 
 if __name__ == "__main__":

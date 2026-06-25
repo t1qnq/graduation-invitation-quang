@@ -772,3 +772,171 @@
         font-size: 12px
       }
     }
+
+    /* ============================================================
+    COUNTDOWN
+    ============================================================ */
+    .inv-countdown {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 4px 0 20px
+    }
+
+    .cd-unit {
+      background: #12121f;
+      border: 1px solid rgba(226, 176, 74, .35);
+      border-radius: 10px;
+      padding: 10px 12px;
+      min-width: 58px
+    }
+
+    .cd-num {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: #e2b04a;
+      line-height: 1.1
+    }
+
+    .cd-label {
+      display: block;
+      font-size: .7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .6)
+    }
+
+    .inv-countdown-msg {
+      text-align: center;
+      color: #e2b04a;
+      margin: 0 0 16px;
+      min-height: 1.2em
+    }
+    /* ============================================================
+    SOUND TOGGLE + SPARKLE
+    ============================================================ */
+    .sound-toggle {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 1100;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(226, 176, 74, .6);
+      background: rgba(26, 26, 46, .85);
+      color: #e2b04a;
+      font-size: 1.1rem;
+      cursor: pointer;
+      line-height: 1
+    }
+
+    .sound-toggle:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px
+    }
+
+    .sparkle-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1050;
+      overflow: hidden
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: sparkle-pop 1.3s ease forwards
+    }
+
+    @keyframes sparkle-pop {
+      0% { opacity: 0; transform: scale(.4) translateY(0) }
+      30% { opacity: 1; transform: scale(1) translateY(-8px) }
+      100% { opacity: 0; transform: scale(.6) translateY(-26px) }
+    }
+
+    /* ============================================================
+    DIRECTIONS
+    ============================================================ */
+    .inv-directions {
+      display: inline-block;
+      margin: 0 0 20px;
+      padding: 9px 18px;
+      border-radius: 24px;
+      background: #e2b04a;
+      color: #0a0a14;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .2s ease
+    }
+
+    .inv-directions:hover {
+      background: #f0d078
+    }
+
+    .inv-directions:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px
+    }
+
+    /* ============================================================
+    SHARE
+    ============================================================ */
+    .inv-share {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(226, 176, 74, .25);
+      text-align: center
+    }
+
+    .share-title {
+      font-family: 'Playfair Display', serif;
+      color: #e2b04a;
+      margin-bottom: 12px
+    }
+
+    .share-qr {
+      display: inline-block;
+      padding: 8px;
+      background: #fff;
+      border-radius: 8px;
+      line-height: 0;
+      min-height: 140px;
+      min-width: 140px
+    }
+
+    .share-copy {
+      display: block;
+      margin: 12px auto 0;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(226, 176, 74, .6);
+      background: rgba(26, 26, 46, .85);
+      color: #e2b04a;
+      cursor: pointer
+    }
+
+    .share-copy:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px
+    }
+
+    .share-copied {
+      display: block;
+      margin-top: 8px;
+      min-height: 1.2em;
+      color: rgba(255, 255, 255, .7)
+    }
+
+    /* ============================================================
+    WISHES FIELD
+    ============================================================ */
+    .wish-field {
+      background: rgba(226, 176, 74, .07);
+      border: 1px solid rgba(226, 176, 74, .25);
+      border-radius: 10px;
+      padding: 12px
+    }
