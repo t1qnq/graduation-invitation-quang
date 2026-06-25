@@ -10,7 +10,10 @@ This file is the first context stop for future Codex/agent sessions on this proj
   `app.js` (vanilla JavaScript, loaded with `defer`).
 - RSVP backend: Formspree endpoint in `RSVP_ENDPOINT`.
 - Social preview asset: `preview.png`.
-- Current date context: event date is `2026-07-05`; event time is not confirmed.
+- Current date context: event date is `2026-07-05`; ceremony time is confirmed
+  as `10:00 – 11:45`. The countdown reads `EVENT_DATETIME` in `app.js` as the
+  single source of truth. If the time ever changes, update it there **and** in
+  the `Giờ` detail in `index.html`.
 
 ## Source Of Truth Order
 
@@ -26,7 +29,7 @@ Older reports in `docs/archive/` are historical. Do not treat them as current in
 ## Development Rules
 
 - Keep the app static and dependency-light unless the user asks for a build system.
-- Do not invent the ceremony time. Keep `Sẽ cập nhật sau` until the user provides a confirmed time.
+- The ceremony time is confirmed (`10:00 – 11:45` on `05/07/2026`). Do not revert to `Sẽ cập nhật sau`.
 - Do not perform real Formspree submissions unless the user explicitly asks; that can email the host and consume quota.
 - Preserve Vietnamese copy and the formal-but-warm invitation tone.
 - Avoid inline event attributes. Bind interactions in the `DOMContentLoaded` initializer.
@@ -60,9 +63,11 @@ For visual changes, also open the page locally with `python -m http.server 8080`
 - Google Fonts are loaded from `fonts.googleapis.com` / `fonts.gstatic.com`.
 - Formspree receives RSVP submissions.
 - Deployment/domain assumptions currently point at `https://quang-grad-2026.xyz/`.
+- `assets/qrcode.min.js` is a vendored QR library (no CDN). The share QR
+  encodes `window.location.href`, so it self-corrects across domains without
+  any code change.
 
 ## Current Launch Blockers
 
-- Confirm ceremony time and update the displayed `Giờ` field.
 - Test one real RSVP through Formspree from the deployed URL.
 - Test on at least one iPhone-sized viewport, one Android/Chrome device or emulator, and desktop.

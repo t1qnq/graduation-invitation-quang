@@ -33,10 +33,11 @@ git diff --check
 - Product requirements: `PRD-graduation-invitation.md`
 - Active spec: `docs/superpowers/specs/2026-06-24-project-optimization-design.md`
 - Active plan: `docs/superpowers/plans/2026-06-24-project-optimization.md`
+- Feature pack spec: `docs/superpowers/specs/2026-06-25-feature-pack-design.md`
+- Feature pack plan: `docs/superpowers/plans/2026-06-25-feature-pack.md`
 - Version history: `CHANGELOG.md`
 
 ## Launch Blockers
 
-- Event time is still unknown; `index.html` intentionally shows `Sẽ cập nhật sau`.
 - A real Formspree RSVP submission must still be tested from the deployed domain.
 - Physical mobile/device testing is still pending.

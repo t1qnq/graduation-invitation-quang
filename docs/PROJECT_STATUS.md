@@ -1,6 +1,6 @@
 # Project Status
 
-> Last updated: 2026-06-24
+> Last updated: 2026-06-25
 
 ## Current State
 
@@ -19,10 +19,16 @@ The site is a functional static invitation with envelope opening, responsive inv
 - Screen focus/inert handling for accessibility.
 - Social preview image `preview.png`.
 - Regression tests in Python and Node.
+- Countdown timer to the ceremony (`EVENT_DATETIME` single source of truth).
+- Moment-based Web Audio chimes + sparkle effects on envelope open and RSVP
+  success; mute toggle (🔊/🔇) persisted in `localStorage`; sparkle suppressed
+  under `prefers-reduced-motion`.
+- "Chỉ đường" Google Maps directions button.
+- Share block: QR code of the live URL (vendored `assets/qrcode.min.js`, no
+  CDN) + copy-link button with clipboard fallback.
 
 ## Still Blocking Launch
 
-- Event time is still unknown. Do not launch final invitations until the real time replaces `Sẽ cập nhật sau`.
 - Real Formspree delivery has not been verified from production/deployed URL.
 - Physical device testing is still pending.
 - Final domain is not confirmed. `og:image` and the canonical URL currently
@@ -31,10 +37,9 @@ The site is a functional static invitation with envelope opening, responsive inv
 
 ## Safe Next Steps
 
-1. Confirm ceremony time and update all visible event-time text.
-2. Deploy to the final domain.
-3. Submit one real RSVP and verify the email/Formspree dashboard entry.
-4. Test on mobile and desktop with the final URL and social preview.
+1. Deploy to the final domain.
+2. Submit one real RSVP and verify the email/Formspree dashboard entry.
+3. Test on mobile and desktop with the final URL and social preview.
 
 ## Verification Commands
 

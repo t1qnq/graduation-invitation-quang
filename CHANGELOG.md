@@ -3,6 +3,25 @@
 This file is the single source of truth for version numbers. Format loosely
 follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [Unreleased] — v2.3
+
+Feature pack: countdown, sound/sparkle effects, directions, share block.
+
+- Added: countdown timer to the ceremony (`EVENT_DATETIME` in `app.js` is the
+  single source of truth; shows `Sẽ cập nhật sau` if unset; shows a past-event
+  message after the date passes).
+- Added: moment-based Web Audio chimes + sparkle burst on envelope open and on
+  RSVP success; 🔊/🔇 mute toggle persisted in `localStorage`
+  (`grad_sound_muted`); sparkle suppressed under `prefers-reduced-motion`.
+- Added: "Chỉ đường" Google Maps directions button linking to a Maps search for
+  the venue.
+- Added: share block — QR code of the live page URL (vendored
+  `assets/qrcode.min.js`, no CDN) + copy-link button with clipboard API and
+  text-selection fallback.
+- Changed: set confirmed ceremony time to `10:00 – 11:45` (replaces the
+  `Sẽ cập nhật sau` placeholder in the Giờ detail).
+- Changed: emphasized the optional wishes field with dedicated styling.
+
 ## [Unreleased] — v2.2
 
 Optimization & workflow-consistency pass.
