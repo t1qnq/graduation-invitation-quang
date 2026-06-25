@@ -112,6 +112,7 @@ const context = vm.createContext({
     getItem(key) { return storage.has(key) ? storage.get(key) : null; },
     setItem(key, value) { storage.set(key, value); }
   },
+  navigator: { clipboard: { writeText: async () => {} } },
   requestAnimationFrame(callback) { callback(); },
   setTimeout(callback) { callback(); return 1; },
   clearTimeout() {},
@@ -190,6 +191,9 @@ context.submitRSVP({ preventDefault() {} }).then(() => {
   // playChime must be a no-op (no throw) when AudioContext is absent from the context.
   assert.doesNotThrow(() => context.playChime('open'), 'playChime should not throw without AudioContext');
   assert.doesNotThrow(() => context.playChime('success'), 'playChime should not throw without AudioContext');
+
+  // initShare must not throw when QRCode/elements are absent from the stub context.
+  assert.doesNotThrow(() => context.initShare(), 'initShare should not throw without QRCode or share elements');
 
   console.log('Runtime checks passed');
 }).catch((error) => {

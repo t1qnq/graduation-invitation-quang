@@ -164,6 +164,14 @@
       <div class="sent-banner" id="sent-banner" style="display:none" role="status" aria-live="polite">
         Bạn đã gửi xác nhận trước đó. Bạn vẫn có thể sửa và gửi lại.
       </div>
+
+      <!-- Share -->
+      <div class="inv-share">
+        <div class="share-title">Chia sẻ thiệp</div>
+        <div class="share-qr" id="share-qr" aria-label="Mã QR liên kết thiệp"></div>
+        <button type="button" class="share-copy" id="share-copy">🔗 Sao chép liên kết</button>
+        <span class="share-copied" id="share-copied" role="status" aria-live="polite"></span>
+      </div>
     </div>
   </div>
 
@@ -187,6 +195,7 @@
   <!-- ============================================================
   JAVASCRIPT
   ============================================================ -->
+  <script src="assets/qrcode.min.js" defer></script>
   <script src="app.js" defer></script>
 </body>
 

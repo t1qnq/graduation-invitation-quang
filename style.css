@@ -881,3 +881,52 @@
       outline: 2px solid #fff;
       outline-offset: 2px
     }
+
+    /* ============================================================
+    SHARE
+    ============================================================ */
+    .inv-share {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(226, 176, 74, .25);
+      text-align: center
+    }
+
+    .share-title {
+      font-family: 'Playfair Display', serif;
+      color: #e2b04a;
+      margin-bottom: 12px
+    }
+
+    .share-qr {
+      display: inline-block;
+      padding: 8px;
+      background: #fff;
+      border-radius: 8px;
+      line-height: 0;
+      min-height: 140px;
+      min-width: 140px
+    }
+
+    .share-copy {
+      display: block;
+      margin: 12px auto 0;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(226, 176, 74, .6);
+      background: rgba(26, 26, 46, .85);
+      color: #e2b04a;
+      cursor: pointer
+    }
+
+    .share-copy:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px
+    }
+
+    .share-copied {
+      display: block;
+      margin-top: 8px;
+      min-height: 1.2em;
+      color: rgba(255, 255, 255, .7)
+    }

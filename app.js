@@ -411,6 +411,58 @@
     }
 
     // ================================================================
+    // SHARE — QR + copy link
+    // ================================================================
+    async function copyLink(url) {
+      if (!url) return false;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+          return true;
+        }
+      } catch (e) { /* fall through to legacy path */ }
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand('copy');
+        ta.remove();
+        return ok;
+      } catch (e) { return false; }
+    }
+
+    function initShare() {
+      const url = (typeof window !== 'undefined' && window.location && window.location.href)
+        ? window.location.href : '';
+      const qrBox = document.getElementById('share-qr');
+      if (qrBox) {
+        if (url && typeof window.QRCode === 'function') {
+          try {
+            qrBox.innerHTML = '';
+            new window.QRCode(qrBox, {
+              text: url, width: 140, height: 140,
+              colorDark: '#0a0a14', colorLight: '#ffffff'
+            });
+          } catch (e) { qrBox.style.display = 'none'; }
+        } else {
+          qrBox.style.display = 'none';
+        }
+      }
+      const copyBtn = document.getElementById('share-copy');
+      const copied = document.getElementById('share-copied');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const ok = await copyLink(url);
+          if (copied) {
+            copied.textContent = ok ? 'Đã sao chép!' : 'Không sao chép được, hãy copy thủ công.';
+            setTimeout(() => { copied.textContent = ''; }, 2500);
+          }
+        });
+      }
+    }
+
+    // ================================================================
     // COUNTDOWN
     // ================================================================
     function computeCountdown(targetIso, nowMs) {
@@ -463,6 +515,7 @@
       initParticles();
       initCountdown();
       initSound();
+      initShare();
 
       // Staggered text reveal on envelope
       const envelopeText = document.querySelector('.envelope-text');

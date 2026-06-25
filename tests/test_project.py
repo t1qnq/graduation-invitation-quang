@@ -225,6 +225,17 @@ class GraduationInvitationChecks(unittest.TestCase):
         self.assertRegex(self.html, r'id="directions-link"[^>]*target="_blank"[^>]*rel="noopener"')
         self.assertRegex(self.css, r"\.inv-directions\s*\{")
 
+    def test_share_qr_and_copy_present(self):
+        self.assertTrue((ROOT / "assets" / "qrcode.min.js").is_file())
+        self.assertIn('<script src="assets/qrcode.min.js" defer></script>', self.html)
+        self.assertIn('id="share-qr"', self.html)
+        self.assertIn('id="share-copy"', self.html)
+        self.assertIn("function initShare", self.js)
+        self.assertIn("function copyLink", self.js)
+        self.assertIn("initShare();", self.js)
+        self.assertIn("window.location.href", self.js)
+        self.assertRegex(self.css, r"\.inv-share\s*\{")
+
 
 if __name__ == "__main__":
     unittest.main()
