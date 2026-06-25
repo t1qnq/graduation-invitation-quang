@@ -188,6 +188,12 @@ class GraduationInvitationChecks(unittest.TestCase):
             with self.subTest(path=relative_path):
                 self.assertFalse((ROOT / relative_path).exists())
 
+    def test_ceremony_time_is_set(self):
+        # The confirmed time replaces the old placeholder.
+        self.assertIn("10:00", self.html)
+        self.assertIn("11:45", self.html)
+        self.assertNotIn("Sẽ cập nhật sau", self.html)
+
 
 if __name__ == "__main__":
     unittest.main()
