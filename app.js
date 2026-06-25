@@ -424,6 +424,9 @@
       try {
         const ta = document.createElement('textarea');
         ta.value = url;
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        ta.style.left = '-9999px';
         document.body.appendChild(ta);
         ta.select();
         const ok = document.execCommand('copy');
