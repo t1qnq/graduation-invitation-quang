@@ -14,6 +14,8 @@
     let rsvpCheckInitialized = false;
     let repeatSubmitConfirmedKey = null;
     let activeConfetti = null;
+    let soundMuted = false;
+    let audioCtx = null;
 
     // ================================================================
     // HELPERS
@@ -93,6 +95,8 @@
     function openEnvelope() {
       if (isAnimating) return;
       isAnimating = true;
+      playChime('open');
+      sparkleBurst();
 
       const reduceMotion = typeof window.matchMedia === 'function'
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -290,6 +294,8 @@
           }
 
           createConfetti();
+          playChime('success');
+          sparkleBurst();
           setTimeout(() => showScreen('screen-thanks'), 800);
         } else {
           throw new Error('HTTP ' + response.status);
@@ -337,6 +343,70 @@
         container.remove();
         if (activeConfetti === container) activeConfetti = null;
       }, 3000);
+    }
+
+    // ================================================================
+    // SOUND + SPARKLE (moment effects)
+    // ================================================================
+    function updateSoundToggle(toggle) {
+      toggle.textContent = soundMuted ? '🔇' : '🔊';
+      toggle.setAttribute('aria-label', soundMuted ? 'Bật âm thanh' : 'Tắt âm thanh');
+      toggle.setAttribute('aria-pressed', soundMuted ? 'true' : 'false');
+    }
+
+    function initSound() {
+      try { soundMuted = localStorage.getItem('grad_sound_muted') === '1'; } catch (e) {}
+      const toggle = document.getElementById('sound-toggle');
+      if (!toggle) return;
+      updateSoundToggle(toggle);
+      toggle.addEventListener('click', () => {
+        soundMuted = !soundMuted;
+        try { localStorage.setItem('grad_sound_muted', soundMuted ? '1' : '0'); } catch (e) {}
+        updateSoundToggle(toggle);
+      });
+    }
+
+    function playChime(type) {
+      if (soundMuted) return;
+      const AC = typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext);
+      if (!AC) return;
+      try {
+        if (!audioCtx) audioCtx = new AC();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const notes = type === 'success' ? [523.25, 659.25, 783.99] : [659.25, 880.0];
+        notes.forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          const start = now + i * 0.12;
+          gain.gain.setValueAtTime(0.0001, start);
+          gain.gain.exponentialRampToValueAtTime(0.25, start + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.5);
+          osc.connect(gain).connect(audioCtx.destination);
+          osc.start(start);
+          osc.stop(start + 0.55);
+        });
+      } catch (e) { /* audio unavailable — silent */ }
+    }
+
+    function sparkleBurst() {
+      const reduceMotion = typeof window.matchMedia === 'function'
+        && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) return;
+      const layer = document.getElementById('sparkle-layer');
+      if (!layer) return;
+      for (let i = 0; i < 14; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.textContent = '✨';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 60 + '%';
+        s.style.animationDelay = (Math.random() * 0.3) + 's';
+        layer.appendChild(s);
+        setTimeout(() => s.remove(), 1400);
+      }
     }
 
     // ================================================================
@@ -391,6 +461,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       initParticles();
       initCountdown();
+      initSound();
 
       // Staggered text reveal on envelope
       const envelopeText = document.querySelector('.envelope-text');

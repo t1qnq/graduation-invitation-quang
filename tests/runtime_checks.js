@@ -187,6 +187,10 @@ context.submitRSVP({ preventDefault() {} }).then(() => {
   context.openEnvelope();
   assert.equal(inviteScreen.classList.contains('active'), true, 'Reduced motion should still reach the invite screen');
 
+  // playChime must be a no-op (no throw) when AudioContext is absent from the context.
+  assert.doesNotThrow(() => context.playChime('open'), 'playChime should not throw without AudioContext');
+  assert.doesNotThrow(() => context.playChime('success'), 'playChime should not throw without AudioContext');
+
   console.log('Runtime checks passed');
 }).catch((error) => {
   console.error(error);

@@ -67,6 +67,21 @@ class GraduationInvitationChecks(unittest.TestCase):
     def test_guest_query_parameter_is_not_decoded_twice(self):
         self.assertNotIn("decodeURIComponent(guest)", self.source)
 
+    def test_sound_and_animation_present(self):
+        self.assertIn('id="sound-toggle"', self.html)
+        self.assertIn('id="sparkle-layer"', self.html)
+        self.assertIn("function initSound", self.js)
+        self.assertIn("function playChime", self.js)
+        self.assertIn("function sparkleBurst", self.js)
+        self.assertIn("AudioContext", self.js)
+        self.assertIn("grad_sound_muted", self.js)
+        self.assertIn("playChime('open')", self.js)
+        self.assertIn("playChime('success')", self.js)
+        sparkle = re.search(r"function sparkleBurst\(\)\s*\{(?P<body>.*?)\n    \}", self.js, re.DOTALL)
+        self.assertIsNotNone(sparkle)
+        self.assertIn("prefers-reduced-motion: reduce", sparkle.group("body"))
+        self.assertRegex(self.css, r"@keyframes sparkle-pop")
+
     def test_social_preview_asset_exists(self):
         match = re.search(r'<meta property="og:image" content="[^"]*/([^/"]+)">', self.html)
         self.assertIsNotNone(match)
