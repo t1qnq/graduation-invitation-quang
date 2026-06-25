@@ -236,6 +236,10 @@ class GraduationInvitationChecks(unittest.TestCase):
         self.assertIn("window.location.href", self.js)
         self.assertRegex(self.css, r"\.inv-share\s*\{")
 
+    def test_wishes_field_is_emphasized(self):
+        self.assertRegex(self.html, r'class="form-group wish-field"')
+        self.assertRegex(self.css, r"\.wish-field\s*\{")
+
 
 if __name__ == "__main__":
     unittest.main()
