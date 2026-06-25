@@ -772,3 +772,44 @@
         font-size: 12px
       }
     }
+
+    /* ============================================================
+    COUNTDOWN
+    ============================================================ */
+    .inv-countdown {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 4px 0 20px
+    }
+
+    .cd-unit {
+      background: #12121f;
+      border: 1px solid rgba(226, 176, 74, .35);
+      border-radius: 10px;
+      padding: 10px 12px;
+      min-width: 58px
+    }
+
+    .cd-num {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: #e2b04a;
+      line-height: 1.1
+    }
+
+    .cd-label {
+      display: block;
+      font-size: .7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .6)
+    }
+
+    .inv-countdown-msg {
+      text-align: center;
+      color: #e2b04a;
+      margin: 0 0 16px;
+      min-height: 1.2em
+    }

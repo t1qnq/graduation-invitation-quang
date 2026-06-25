@@ -115,6 +115,8 @@ const context = vm.createContext({
   requestAnimationFrame(callback) { callback(); },
   setTimeout(callback) { callback(); return 1; },
   clearTimeout() {},
+  setInterval() { return 2; },
+  clearInterval() {},
   // openEnvelope consults prefers-reduced-motion via matchMedia; toggle via reduceMotion.
   window: {
     location: { search: '?guest=Nh%C3%B3m%20100%25' },
@@ -123,6 +125,17 @@ const context = vm.createContext({
 });
 
 vm.runInContext(appSource, context, { filename: 'app.js' });
+
+// Countdown pure helper
+const future = context.computeCountdown('2026-07-05T10:00:00+07:00', Date.parse('2026-07-04T10:00:00+07:00'));
+assert.equal(future.valid, true);
+assert.equal(future.past, false);
+assert.equal(future.days, 1, 'One day before the event = 1 day remaining');
+assert.equal(future.hours, 0);
+const past = context.computeCountdown('2026-07-05T10:00:00+07:00', Date.parse('2026-07-06T10:00:00+07:00'));
+assert.equal(past.past, true, 'After the event, past should be true');
+const bad = context.computeCountdown('not-a-date', Date.now());
+assert.equal(bad.valid, false, 'Invalid datetime should be flagged invalid');
 
 context.showScreen('screen-invite');
 assert.equal(envelopeScreen.inert, true, 'Hidden screen should become inert');

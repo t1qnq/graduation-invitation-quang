@@ -188,6 +188,16 @@ class GraduationInvitationChecks(unittest.TestCase):
             with self.subTest(path=relative_path):
                 self.assertFalse((ROOT / relative_path).exists())
 
+    def test_countdown_is_present(self):
+        self.assertIn('id="countdown"', self.html)
+        for slot in ("cd-days", "cd-hours", "cd-mins", "cd-secs"):
+            self.assertIn(slot, self.html)
+        self.assertIn("EVENT_DATETIME = '2026-07-05T10:00:00+07:00'", self.js)
+        self.assertIn("function computeCountdown", self.js)
+        self.assertIn("function initCountdown", self.js)
+        self.assertIn("initCountdown();", self.js)
+        self.assertRegex(self.css, r"\.inv-countdown\s*\{")
+
     def test_ceremony_time_is_set(self):
         # The confirmed time replaces the old placeholder.
         self.assertIn("10:00", self.html)

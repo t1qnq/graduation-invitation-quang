@@ -4,6 +4,7 @@
     const RSVP_ENDPOINT = 'https://formspree.io/f/xeewzabd';
     const FETCH_TIMEOUT = 15000;
     const RSVP_REPEAT_WINDOW_MS = 60000;
+    const EVENT_DATETIME = '2026-07-05T10:00:00+07:00';
 
     // ================================================================
     // STATE
@@ -339,10 +340,57 @@
     }
 
     // ================================================================
+    // COUNTDOWN
+    // ================================================================
+    function computeCountdown(targetIso, nowMs) {
+      const target = Date.parse(targetIso);
+      if (!Number.isFinite(target)) return { valid: false };
+      const diff = target - nowMs;
+      if (diff <= 0) return { valid: true, past: true };
+      const totalSec = Math.floor(diff / 1000);
+      return {
+        valid: true,
+        past: false,
+        days: Math.floor(totalSec / 86400),
+        hours: Math.floor((totalSec % 86400) / 3600),
+        mins: Math.floor((totalSec % 3600) / 60),
+        secs: totalSec % 60
+      };
+    }
+
+    function initCountdown() {
+      const box = document.getElementById('countdown');
+      const msg = document.getElementById('countdown-msg');
+      if (!box || !msg) return;
+      const pad = (n) => String(n).padStart(2, '0');
+      const render = () => {
+        const r = computeCountdown(EVENT_DATETIME, Date.now());
+        if (!r.valid) {
+          box.style.display = 'none';
+          msg.textContent = 'Sẽ cập nhật sau';
+          return true;
+        }
+        if (r.past) {
+          box.style.display = 'none';
+          msg.textContent = 'Buổi lễ đã diễn ra — cảm ơn bạn!';
+          return true;
+        }
+        document.getElementById('cd-days').textContent = pad(r.days);
+        document.getElementById('cd-hours').textContent = pad(r.hours);
+        document.getElementById('cd-mins').textContent = pad(r.mins);
+        document.getElementById('cd-secs').textContent = pad(r.secs);
+        return false;
+      };
+      if (render()) return;
+      const timer = setInterval(() => { if (render()) clearInterval(timer); }, 1000);
+    }
+
+    // ================================================================
     // INIT
     // ================================================================
     document.addEventListener('DOMContentLoaded', () => {
       initParticles();
+      initCountdown();
 
       // Staggered text reveal on envelope
       const envelopeText = document.querySelector('.envelope-text');
