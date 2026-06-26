@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -12,191 +12,543 @@
   <meta property="og:image" content="https://t1qnq.github.io/graduation-invitation-quang/preview.png">
   <link rel="canonical" href="https://t1qnq.github.io/graduation-invitation-quang/">
   <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231a1a2e' stroke='%23e2b04a' stroke-width='3'/><text x='50' y='65' text-anchor='middle' font-size='50'>🎓</text></svg>">
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2316332b' stroke='%23c5a253' stroke-width='3'/><text x='50' y='65' text-anchor='middle' font-size='50'>🎓</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: #0c1d18;
+      font-family: 'Jost', sans-serif;
+    }
+
+    @keyframes chevBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+    @keyframes sealFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+    input::placeholder, textarea::placeholder { color: #a6b0a7; }
+    input:focus, select:focus, textarea:focus { border-color: #c5a253 !important; }
+
+    .page {
+      min-height: 100vh;
+      background:
+        radial-gradient(150% 110% at 50% -8%, #1f463a 0%, rgba(18, 48, 39, 0) 52%),
+        linear-gradient(180deg, #0f261f, #0a1813);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background: #f7f2e8;
+      background-image: radial-gradient(120% 60% at 50% 0%, #fffdf8 0%, rgba(255, 253, 248, 0) 55%);
+      box-shadow: 0 40px 90px rgba(0, 0, 0, .55);
+      overflow: hidden;
+    }
+
+    /* HERO */
+    .hero { padding: 58px 34px 8px; text-align: center; }
+    .seal-float { display: inline-flex; color: #c5a253; animation: sealFloat 5s ease-in-out infinite; }
+    .eyebrow { margin-top: 18px; font-size: 11px; letter-spacing: .42em; text-transform: uppercase; color: #9a8a5e; }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 46px;
+      line-height: 1.04; color: #16332b; margin: 14px 0 0; letter-spacing: .01em;
+    }
+    .ornament { display: flex; align-items: center; justify-content: center; gap: 13px; margin: 22px 0 18px; }
+    .ornament .line-l { width: 42px; height: 1px; background: linear-gradient(90deg, transparent, #c5a253); }
+    .ornament .line-r { width: 42px; height: 1px; background: linear-gradient(90deg, #c5a253, transparent); }
+    .ornament .diamond { width: 5px; height: 5px; background: #c5a253; transform: rotate(45deg); }
+    .hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: #4a5a50; }
+    .hero-msg { font-size: 14.5px; line-height: 1.85; color: #5c6b62; max-width: 340px; margin: 24px auto 0; font-weight: 300; }
+
+    /* COUNTDOWN */
+    .countdown { padding: 38px 34px 12px; }
+    .countdown-title { text-align: center; font-size: 10.5px; letter-spacing: .32em; text-transform: uppercase; color: #9aa79e; margin-bottom: 16px; }
+    .cd-row { display: flex; gap: 9px; }
+    .cd-unit { flex: 1; padding: 16px 4px; text-align: center; background: #fcf9f2; border: 1px solid rgba(22, 51, 43, .1); }
+    .cd-num { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 34px; line-height: 1; color: #16332b; }
+    .cd-num.accent { color: #c5a253; }
+    .cd-label { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: #9aa79e; margin-top: 7px; }
+    .countdown-msg { text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; color: #4a5a50; padding: 6px 0; }
+
+    /* DETAILS */
+    .details { padding: 36px 34px 6px; }
+    .detail-row { display: flex; align-items: center; gap: 16px; padding: 17px 0; border-top: 1px solid rgba(22, 51, 43, .1); }
+    .detail-row.last { border-bottom: 1px solid rgba(22, 51, 43, .1); }
+    .detail-ic { flex: none; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; color: #c5a253; }
+    .detail-body { flex: 1; }
+    .detail-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #9aa79e; }
+    .detail-value { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #16332b; margin-top: 1px; }
+    .maps-link {
+      display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 22px;
+      padding: 14px; border: 1px solid #c5a253; color: #16332b; text-decoration: none;
+      font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase;
+      background: rgba(197, 162, 83, .08); transition: background .25s;
+    }
+    .maps-link:hover { background: rgba(197, 162, 83, .18); }
+
+    /* RSVP */
+    .rsvp { margin: 40px 0 0; padding: 42px 34px 44px; background: linear-gradient(180deg, #16332b, #102620); }
+    .rsvp-head { text-align: center; }
+    .rsvp-eyebrow { font-size: 10.5px; letter-spacing: .34em; text-transform: uppercase; color: #c5a253; }
+    .rsvp-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 32px; color: #f3ead6; margin: 8px 0 0; }
+    .rsvp-note { font-size: 13px; color: #a9bcae; font-weight: 300; margin: 10px 0 0; }
+    .field-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #9fb3a6; margin-bottom: 8px; }
+    .input, .select, .textarea {
+      width: 100%; padding: 13px 14px; border: 1px solid rgba(247, 242, 232, .22);
+      background: rgba(247, 242, 232, .05); color: #f3ead6; font-family: 'Jost', sans-serif;
+      font-size: 15px; outline: none; border-radius: 0;
+    }
+    .select { appearance: none; }
+    .select option { color: #16332b; }
+    .textarea { resize: vertical; line-height: 1.6; }
+    .field-error { font-size: 12px; color: #e5a37a; margin-top: 7px; }
+    .attend-row { display: flex; gap: 10px; }
+    .attend-btn {
+      flex: 1; padding: 13px; border: 1px solid rgba(197, 162, 83, .5); cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 14px; letter-spacing: .04em; transition: all .25s;
+      background: transparent; color: #dfe8e0;
+    }
+    .attend-btn.active { background: #c5a253; color: #102620; }
+    .wish-head { display: flex; align-items: baseline; justify-content: space-between; margin: 22px 0 8px; }
+    .wish-head .label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #9fb3a6; }
+    .wish-head .count { font-size: 11px; color: #6f857a; }
+    .btn-submit {
+      width: 100%; margin-top: 24px; padding: 16px; background: #c5a253; color: #102620; border: none;
+      cursor: pointer; font-family: 'Jost', sans-serif; font-size: 12.5px; letter-spacing: .22em;
+      text-transform: uppercase; font-weight: 500; transition: background .25s;
+    }
+    .btn-submit:hover { background: #d8bd7e; }
+
+    .confirm-box { margin-top: 30px; text-align: center; border: 1px solid rgba(197, 162, 83, .4); padding: 34px 24px; background: rgba(197, 162, 83, .06); }
+    .confirm-check { width: 54px; height: 54px; border-radius: 50%; border: 1px solid #c5a253; display: inline-flex; align-items: center; justify-content: center; color: #c5a253; }
+    .confirm-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; color: #f3ead6; margin: 16px 0 0; }
+    .confirm-text { font-size: 14px; color: #bccabf; font-weight: 300; line-height: 1.7; margin: 10px 0 0; }
+    .edit-again { margin-top: 18px; background: none; border: none; color: #c5a253; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
+
+    /* SHARE + FOOTER */
+    .footer { padding: 40px 34px 54px; text-align: center; }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 9px; padding: 12px 22px; border: 1px solid #c5a253;
+      background: rgba(197, 162, 83, .08); color: #16332b; cursor: pointer; font-family: 'Jost', sans-serif;
+      font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; transition: background .25s;
+    }
+    .share-btn:hover { background: rgba(197, 162, 83, .18); }
+    .footer-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; color: #4a5a50; margin: 14px 0 0; }
+    .footer-credit { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: #9aa79e; margin-top: 10px; }
+
+    /* COVER */
+    .cover {
+      position: fixed; inset: 0; z-index: 50; cursor: pointer;
+      transition: transform 1.15s cubic-bezier(.76, 0, .24, 1), opacity .85s ease;
+      background:
+        radial-gradient(125% 80% at 50% 0%, #21483b 0%, rgba(16, 38, 32, 0) 60%),
+        linear-gradient(180deg, rgba(19, 48, 39, 0), #0c1d18), #0f261f;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 54px 30px; text-align: center;
+    }
+    .cover.opened { transform: translateY(-106%); opacity: 0; pointer-events: none; }
+    .cover-frame-1 { position: absolute; inset: 16px; border: 1px solid rgba(197, 162, 83, .5); pointer-events: none; }
+    .cover-frame-2 { position: absolute; inset: 22px; border: 1px solid rgba(197, 162, 83, .2); pointer-events: none; }
+    .cover-main { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+    .cover-eyebrow { margin-top: 22px; font-size: 11px; letter-spacing: .46em; text-transform: uppercase; color: #c5a253; }
+    .cover-name { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 52px; line-height: 1.05; color: #f3ead6; margin: 18px 0 0; }
+    .cover-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 25px; color: #cfd8cd; }
+    .cover-date { margin-top: 14px; font-size: 14px; letter-spacing: .3em; color: #9fb3a6; }
+    .cover-cta { flex: none; display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 28px; }
+    .cover-cta-label { font-size: 11px; letter-spacing: .34em; text-transform: uppercase; color: #c5a253; }
+    .cover-chev { color: #c5a253; animation: chevBounce 1.7s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .seal-float, .cover-chev { animation: none !important; }
+      .cover { transition: opacity .3s ease; }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="page">
+    <!-- ===================== INVITATION CARD ===================== -->
+    <div class="card">
 
-  <!-- Background particles -->
-  <div class="bg-particles" id="bg-particles" aria-hidden="true"></div>
-
-  <!-- Sound toggle + sparkle effects -->
-  <button id="sound-toggle" class="sound-toggle" type="button" aria-label="Tắt âm thanh" aria-pressed="false">🔊</button>
-  <div class="sparkle-layer" id="sparkle-layer" aria-hidden="true"></div>
-
-  <!-- ============================================================
-  SCREEN 1: ENVELOPE
-  ============================================================ -->
-  <div id="screen-envelope" class="screen active" role="region" aria-label="Thiệp mời tốt nghiệp">
-    <button class="envelope-btn" aria-label="Mở thiệp mời">
-      <div class="envelope">
-        <div class="envelope-seal" aria-hidden="true">🎓</div>
-        <div class="envelope-text">
-          <span class="env-name">QUÁCH NGỌC QUANG</span>
-          <span class="env-event">LỄ TỐT NGHIỆP</span>
-          <span class="env-date">05 . 07 . 2026</span>
-          <span class="env-venue">Hội trường Nguyễn Văn Đạo</span>
+      <!-- HERO -->
+      <div class="hero">
+        <div class="seal-float" aria-hidden="true">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#c5a253" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 8 12 13l10.5-5L12 3Z"></path><path d="M22.5 8v5"></path><path d="M6 10.4V15c0 1.25 2.7 2.5 6 2.5s6-1.25 6-2.5v-4.6"></path></svg>
         </div>
-      </div>
-      <p class="env-cta">▼ CLICK TO OPEN ▼</p>
-    </button>
-  </div>
-
-  <!-- ============================================================
-  SCREEN 2: INVITE + RSVP FORM
-  ============================================================ -->
-  <div id="screen-invite" class="screen" role="region" aria-label="Thiệp mời và form xác nhận tham dự"
-    aria-hidden="true" inert>
-    <a class="skip-link" href="#rsvp-form">Bỏ qua tới biểu mẫu xác nhận</a>
-    <div class="invite-wrapper" id="invite-wrapper">
-      <!-- Header -->
-      <span class="inv-emoji" aria-hidden="true">🎓</span>
-      <div class="inv-greeting">Trân Trọng Mời</div>
-      <h2 class="inv-name" tabindex="-1" data-screen-focus>Quách Ngọc Quang</h2>
-      <div class="inv-divider"></div>
-
-      <!-- Message -->
-      <p class="inv-message">
-        Mình trân trọng mời bạn đến dự lễ tốt nghiệp của mình.<br>
-        Sự hiện diện của bạn sẽ là món quà ý nghĩa nhất trong ngày đặc biệt này.
-      </p>
-
-      <!-- Countdown -->
-      <div class="inv-countdown" id="countdown" role="timer" aria-label="Đếm ngược tới buổi lễ">
-        <div class="cd-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-label">Ngày</span></div>
-        <div class="cd-unit"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">Giờ</span></div>
-        <div class="cd-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-label">Phút</span></div>
-        <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-label">Giây</span></div>
-      </div>
-      <p class="inv-countdown-msg" id="countdown-msg" role="status" aria-live="polite"></p>
-
-      <!-- Details -->
-      <div class="inv-details">
-        <div class="inv-detail">
-          <span class="detail-icon" aria-hidden="true">📅</span>
-          <span class="detail-label">Ngày</span>
-          <span class="detail-value">05 / 07 / 2026</span>
+        <div class="eyebrow">Lễ tốt nghiệp của</div>
+        <h1 class="hero-name">Quách<br>Ngọc Quang</h1>
+        <div class="ornament" aria-hidden="true">
+          <span class="line-l"></span><span class="diamond"></span><span class="line-r"></span>
         </div>
-        <div class="inv-detail">
-          <span class="detail-icon" aria-hidden="true">📍</span>
-          <span class="detail-label">Địa điểm</span>
-          <span class="detail-value">Hội trường Nguyễn Văn Đạo</span>
-        </div>
-        <div class="inv-detail">
-          <span class="detail-icon" aria-hidden="true">🕐</span>
-          <span class="detail-label">Giờ</span>
-          <span class="detail-value">10:00 – 11:45</span>
-        </div>
-        <div class="inv-detail">
-          <span class="detail-icon" aria-hidden="true">🎓</span>
-          <span class="detail-label">Sự kiện</span>
-          <span class="detail-value">Lễ Tốt Nghiệp</span>
-        </div>
+        <div class="hero-sub">Lễ Tốt Nghiệp</div>
+        <p class="hero-msg">Mình trân trọng mời bạn đến dự lễ tốt nghiệp của mình. Sự hiện diện của bạn sẽ là món quà ý nghĩa nhất trong ngày đặc biệt này.</p>
       </div>
 
-      <!-- Directions -->
-      <a class="inv-directions" id="directions-link"
-        href="https://www.google.com/maps/search/?api=1&query=H%E1%BB%99i%20tr%C6%B0%E1%BB%9Dng%20Nguy%E1%BB%85n%20V%C4%83n%20%C4%90%E1%BA%A1o%20VNU"
-        target="_blank" rel="noopener">📍 Chỉ đường (Google Maps)</a>
-
-      <!-- RSVP Form -->
-      <form id="rsvp-form" novalidate style="text-align:left">
-        <!-- Honeypot anti-spam -->
-        <input type="text" name="_gotcha" hidden tabindex="-1" autocomplete="off" aria-hidden="true">
-
-        <!-- Name -->
-        <div class="form-group">
-          <label for="rsvp-name">Họ và tên</label>
-          <input type="text" id="rsvp-name" name="name" required placeholder="Nhập họ và tên..." autocomplete="name" aria-describedby="name-hint">
-          <span class="sr-only" id="name-hint">Vui lòng nhập họ và tên đầy đủ của bạn.</span>
-          <span class="form-error" id="error-name" role="alert"></span>
+      <!-- COUNTDOWN -->
+      <div class="countdown">
+        <div class="countdown-title">Đếm ngược đến ngày trọng đại</div>
+        <div class="cd-row" id="cd-row" role="timer" aria-label="Đếm ngược tới buổi lễ">
+          <div class="cd-unit"><div class="cd-num" id="cd-days">--</div><div class="cd-label">Ngày</div></div>
+          <div class="cd-unit"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">Giờ</div></div>
+          <div class="cd-unit"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">Phút</div></div>
+          <div class="cd-unit"><div class="cd-num accent" id="cd-secs">--</div><div class="cd-label">Giây</div></div>
         </div>
+        <div class="countdown-msg" id="countdown-msg" role="status" aria-live="polite" hidden></div>
+      </div>
 
-        <!-- Attendance -->
-        <div class="form-group">
-          <label>Tham dự</label>
-          <div class="radio-group" role="radiogroup" aria-label="Xác nhận tham dự">
-            <label class="radio-card selected" data-value="yes" tabindex="-1">
-              <input type="radio" name="attendance" value="yes" checked>
-              <span>Có</span>
-            </label>
-            <label class="radio-card" data-value="no" tabindex="-1">
-              <input type="radio" name="attendance" value="no">
-              <span>Không</span>
-            </label>
+      <!-- DETAILS -->
+      <div class="details">
+        <div class="detail-row">
+          <div class="detail-ic" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="1.5"></rect><path d="M3 9.5h18M8 2.5v4M16 2.5v4"></path></svg>
+          </div>
+          <div class="detail-body">
+            <div class="detail-label">Ngày</div>
+            <div class="detail-value">Chủ Nhật, 05 / 07 / 2026</div>
           </div>
         </div>
+        <div class="detail-row">
+          <div class="detail-ic" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.2 2"></path></svg>
+          </div>
+          <div class="detail-body">
+            <div class="detail-label">Thời gian</div>
+            <div class="detail-value">10:00 – 11:45</div>
+          </div>
+        </div>
+        <div class="detail-row last">
+          <div class="detail-ic" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
+          </div>
+          <div class="detail-body">
+            <div class="detail-label">Địa điểm</div>
+            <div class="detail-value">Hội trường Nguyễn Văn Đạo</div>
+          </div>
+        </div>
+        <a class="maps-link"
+          href="https://www.google.com/maps/search/?api=1&query=H%E1%BB%99i%20tr%C6%B0%E1%BB%9Dng%20Nguy%E1%BB%85n%20V%C4%83n%20%C4%90%E1%BA%A1o%20VNU"
+          target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5a253" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
+          Chỉ đường (Google Maps)
+        </a>
+      </div>
 
-        <!-- Guest count (hidden if "Không") -->
-        <div class="form-group" id="guest-count-group">
-          <label for="guest-count">Số người</label>
-          <select id="guest-count" name="guestCount">
-            <option value="1">1 người</option>
-            <option value="2">2 người</option>
-            <option value="3">3 người</option>
-            <option value="4">4 người</option>
-            <option value="5">5 người</option>
-          </select>
+      <!-- RSVP -->
+      <div class="rsvp">
+        <div class="rsvp-head">
+          <div class="rsvp-eyebrow">Phúc đáp</div>
+          <h2 class="rsvp-title">Xác nhận tham dự</h2>
+          <p class="rsvp-note">Vui lòng phản hồi trước ngày 30 / 06 / 2026</p>
         </div>
 
-        <!-- Message (optional) -->
-        <div class="form-group wish-field">
-          <label for="rsvp-message">💌 Lời chúc <span class="optional">(tùy chọn)</span></label>
-          <textarea id="rsvp-message" name="message" rows="2" maxlength="500"
-            placeholder="Chúc Quang..." aria-describedby="message-hint"></textarea>
-          <span class="sr-only" id="message-hint">Tối đa 500 ký tự. Đây là mục tùy chọn.</span>
+        <!-- FORM -->
+        <div id="rsvp-form" style="margin-top:30px">
+          <div class="field-label">Họ và tên</div>
+          <input class="input" id="rsvp-name" type="text" placeholder="Nhập họ và tên của bạn" autocomplete="name">
+          <div class="field-error" id="name-error" hidden>Vui lòng nhập họ và tên của bạn.</div>
+
+          <div class="field-label" style="margin-top:22px">Bạn sẽ tham dự chứ?</div>
+          <div class="attend-row">
+            <button type="button" class="attend-btn active" id="btn-yes" data-value="yes">Có, mình sẽ đến</button>
+            <button type="button" class="attend-btn" id="btn-no" data-value="no">Tiếc là không</button>
+          </div>
+
+          <div id="guests-group" style="margin-top:22px">
+            <div class="field-label">Số người tham dự</div>
+            <select class="select" id="rsvp-guests">
+              <option value="1">1 người</option>
+              <option value="2">2 người</option>
+              <option value="3">3 người</option>
+              <option value="4">4 người</option>
+              <option value="5">5 người</option>
+            </select>
+          </div>
+
+          <div class="wish-head">
+            <span class="label">Lời chúc (tùy chọn)</span>
+            <span class="count"><span id="wish-len">0</span> / 500</span>
+          </div>
+          <textarea class="textarea" id="rsvp-wishes" rows="3" maxlength="500" placeholder="Gửi đôi lời chúc mừng đến Quang…"></textarea>
+
+          <button type="button" class="btn-submit" id="btn-submit"><span id="submit-label">Gửi xác nhận</span></button>
+          <div class="field-error" id="submit-error" hidden style="text-align:center; color:#e5a37a"></div>
         </div>
 
-        <!-- Submit -->
-        <button type="submit" class="btn-submit" id="btn-submit">
-          <span class="btn-text">Gửi xác nhận</span>
+        <!-- CONFIRMATION -->
+        <div class="confirm-box" id="confirm-box" hidden role="status" aria-live="polite">
+          <div class="confirm-check" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          </div>
+          <h3 class="confirm-title">Đã ghi nhận!</h3>
+          <p class="confirm-text" id="confirm-text"></p>
+          <button type="button" class="edit-again" id="btn-edit">Chỉnh sửa phản hồi</button>
+        </div>
+      </div>
+
+      <!-- SHARE + FOOTER -->
+      <div class="footer">
+        <button type="button" class="share-btn" id="btn-copy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5a253" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 14.5l5-5"></path><path d="M11.5 7.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"></path><path d="M12.5 16.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"></path></svg>
+          <span id="copy-label">Sao chép liên kết</span>
         </button>
-        <span class="form-error" id="error-submit" role="alert" aria-live="polite"></span>
-      </form>
 
-      <!-- Already sent banner -->
-      <div class="sent-banner" id="sent-banner" style="display:none" role="status" aria-live="polite">
-        Bạn đã gửi xác nhận trước đó. Bạn vẫn có thể sửa và gửi lại.
+        <div class="ornament" style="margin:40px 0 22px" aria-hidden="true">
+          <span class="line-l"></span><span class="diamond"></span><span class="line-r"></span>
+        </div>
+        <div style="display:inline-flex;color:#c5a253" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 8 12 13l10.5-5L12 3Z"></path><path d="M22.5 8v5"></path><path d="M6 10.4V15c0 1.25 2.7 2.5 6 2.5s6-1.25 6-2.5v-4.6"></path></svg>
+        </div>
+        <p class="footer-sub">Hẹn gặp bạn tại buổi lễ</p>
+        <div class="footer-credit">Quách Ngọc Quang · 2026</div>
       </div>
 
-      <!-- Share -->
-      <div class="inv-share">
-        <div class="share-title">Chia sẻ thiệp</div>
-        <div class="share-qr" id="share-qr" aria-label="Mã QR liên kết thiệp"></div>
-        <button type="button" class="share-copy" id="share-copy">🔗 Sao chép liên kết</button>
-        <span class="share-copied" id="share-copied" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <!-- ===================== COVER ===================== -->
+  <div class="cover" id="cover" role="button" tabindex="0" aria-label="Chạm để mở thiệp mời">
+    <div class="cover-frame-1" aria-hidden="true"></div>
+    <div class="cover-frame-2" aria-hidden="true"></div>
+
+    <div class="cover-main">
+      <div class="seal-float" aria-hidden="true">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#c5a253" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 8 12 13l10.5-5L12 3Z"></path><path d="M22.5 8v5"></path><path d="M6 10.4V15c0 1.25 2.7 2.5 6 2.5s6-1.25 6-2.5v-4.6"></path></svg>
+      </div>
+      <div class="cover-eyebrow">Thiệp mời · Lễ tốt nghiệp</div>
+      <h1 class="cover-name">Quách<br>Ngọc Quang</h1>
+      <div class="ornament" style="margin:24px 0" aria-hidden="true">
+        <span class="line-l" style="width:46px"></span><span class="diamond"></span><span class="line-r" style="width:46px"></span>
+      </div>
+      <div class="cover-sub">Lễ Tốt Nghiệp</div>
+      <div class="cover-date">05 · 07 · 2026</div>
+    </div>
+
+    <div class="cover-cta">
+      <div class="cover-cta-label">Chạm để mở thiệp</div>
+      <div class="cover-chev" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
       </div>
     </div>
   </div>
 
-  <!-- ============================================================
-  SCREEN 3: THANK YOU
-  ============================================================ -->
-  <div id="screen-thanks" class="screen" role="region" aria-label="Cảm ơn" aria-hidden="true" inert>
-    <div class="thanks-content">
-      <div class="checkmark-circle">
-        <svg class="checkmark" viewBox="0 0 52 52" aria-hidden="true">
-          <circle class="checkmark-circle-bg" cx="26" cy="26" r="25" fill="none" />
-          <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-        </svg>
-      </div>
-      <h2 class="thanks-title" tabindex="-1" data-screen-focus>Cảm ơn bạn nhé!</h2>
-      <p class="thanks-text" id="thanks-text">Hẹn gặp bạn tại buổi lễ 🎓</p>
-      <a href="./" class="thanks-back">Xem lại thiệp</a>
-    </div>
-  </div>
+  <script>
+    (function () {
+      'use strict';
 
-  <!-- ============================================================
-  JAVASCRIPT
-  ============================================================ -->
-  <script src="assets/qrcode.min.js" defer></script>
-  <script src="app.js" defer></script>
+      var EVENT_DATETIME = '2026-07-05T10:00:00+07:00';
+      var STORAGE_KEY = 'rsvp_quang';
+      var MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=H%E1%BB%99i%20tr%C6%B0%E1%BB%9Dng%20Nguy%E1%BB%85n%20V%C4%83n%20%C4%90%E1%BA%A1o%20VNU';
+
+      // ⬇️ DÁN ĐƯỜNG LINK WEB APP CỦA GOOGLE APPS SCRIPT VÀO ĐÂY
+      // (xem file HUONG-DAN-GOOGLE-SHEETS.md). Để trống = chỉ lưu trong trình duyệt.
+      var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzO4Y5RWc8Z6yxnT5qG9OlzyZEBovolMqXaGb8vspBaz1i31QOqBe0BmbiXGMcAxZa6Vg/exec';
+
+      var state = { attending: 'yes', submitted: false, sending: false };
+      var copyTimer = null;
+
+      function $(id) { return document.getElementById(id); }
+
+      // ---------- COVER ----------
+      function openCover() {
+        var cover = $('cover');
+        if (cover.classList.contains('opened')) return;
+        cover.classList.add('opened');
+        try { document.body.style.overflow = ''; } catch (e) {}
+        window.scrollTo(0, 0);
+      }
+      (function initCover() {
+        try { document.body.style.overflow = 'hidden'; } catch (e) {}
+        var cover = $('cover');
+        cover.addEventListener('click', openCover);
+        cover.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCover(); }
+        });
+      })();
+
+      // ---------- COUNTDOWN ----------
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function renderCountdown() {
+        var target = Date.parse(EVENT_DATETIME);
+        var diff = target - Date.now();
+        var row = $('cd-row');
+        var msg = $('countdown-msg');
+        if (diff <= 0) {
+          row.style.display = 'none';
+          msg.hidden = false;
+          msg.textContent = 'Buổi lễ đã diễn ra — cảm ơn bạn!';
+          return true;
+        }
+        var totalSec = Math.floor(diff / 1000);
+        $('cd-days').textContent = pad(Math.floor(totalSec / 86400));
+        $('cd-hours').textContent = pad(Math.floor((totalSec % 86400) / 3600));
+        $('cd-mins').textContent = pad(Math.floor((totalSec % 3600) / 60));
+        $('cd-secs').textContent = pad(totalSec % 60);
+        return false;
+      }
+      (function initCountdown() {
+        if (renderCountdown()) return;
+        var t = setInterval(function () { if (renderCountdown()) clearInterval(t); }, 1000);
+      })();
+
+      // ---------- ATTENDANCE TOGGLE ----------
+      function setAttending(val) {
+        state.attending = val;
+        $('btn-yes').classList.toggle('active', val === 'yes');
+        $('btn-no').classList.toggle('active', val === 'no');
+        $('guests-group').style.display = val === 'yes' ? '' : 'none';
+      }
+      $('btn-yes').addEventListener('click', function () { setAttending('yes'); });
+      $('btn-no').addEventListener('click', function () { setAttending('no'); });
+
+      // ---------- WISH COUNTER ----------
+      $('rsvp-wishes').addEventListener('input', function () {
+        $('wish-len').textContent = this.value.length;
+      });
+
+      // ---------- NAME ERROR CLEAR ----------
+      $('rsvp-name').addEventListener('input', function () {
+        $('name-error').hidden = true;
+      });
+
+      // ---------- PREFILL FROM URL ?guest= ----------
+      (function prefillName() {
+        try {
+          var guest = new URLSearchParams(window.location.search).get('guest');
+          if (guest && guest.length < 100 && !/<script|javascript:|on\w+=/i.test(guest)) {
+            $('rsvp-name').value = guest;
+          }
+        } catch (e) {}
+      })();
+
+      // ---------- CONFIRMATION VIEW ----------
+      function showConfirm(name, attending, guests) {
+        var who = (name || '').trim() || 'bạn';
+        $('confirm-text').textContent = attending === 'yes'
+          ? 'Cảm ơn ' + who + '! Hẹn gặp bạn (' + guests + ' người) tại buổi lễ tốt nghiệp.'
+          : 'Cảm ơn ' + who + ' đã phản hồi. Rất tiếc vì bạn không thể tham dự cùng mình.';
+        $('rsvp-form').hidden = true;
+        $('confirm-box').hidden = false;
+        state.submitted = true;
+      }
+
+      // ---------- SUBMIT ----------
+      function saveLocal(data) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) {}
+      }
+
+      // ID cố định cho mỗi khách (giữ qua các lần sửa) → script ghi đè đúng dòng.
+      function getOrCreateId() {
+        try {
+          var s = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+          if (s && s.id) return s.id;
+        } catch (e) {}
+        if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+        return 'id-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+      }
+
+      function sendToSheet(data) {
+        // Gửi dạng form-urlencoded (không bị CORS preflight). Dùng no-cors để
+        // không bị chặn đọc response — Apps Script vẫn ghi được dòng dữ liệu.
+        var body = new URLSearchParams({
+          id: data.id,
+          name: data.name, attending: data.attending,
+          guests: data.attending === 'yes' ? data.guests : '0',
+          wishes: data.wishes, timestamp: data.timestamp
+        });
+        return fetch(SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', body: body });
+      }
+
+      $('btn-submit').addEventListener('click', function () {
+        if (state.sending) return;
+        var name = $('rsvp-name').value.trim();
+        if (!name) { $('name-error').hidden = false; $('rsvp-name').focus(); return; }
+        var guests = $('rsvp-guests').value;
+        var wishes = $('rsvp-wishes').value.slice(0, 500);
+        var data = {
+          id: getOrCreateId(),
+          name: name, attending: state.attending, guests: guests, wishes: wishes,
+          timestamp: new Date().toISOString()
+        };
+
+        $('submit-error').hidden = true;
+
+        // Chưa cấu hình endpoint → chỉ lưu trong trình duyệt (như trước).
+        if (!SHEET_ENDPOINT) {
+          saveLocal(data);
+          showConfirm(name, state.attending, guests);
+          return;
+        }
+
+        // Có endpoint → gửi về Google Sheet.
+        state.sending = true;
+        $('btn-submit').disabled = true;
+        $('submit-label').textContent = 'Đang gửi…';
+
+        sendToSheet(data).then(function () {
+          saveLocal(data);
+          showConfirm(name, state.attending, guests);
+        }).catch(function () {
+          $('submit-error').textContent = 'Chưa gửi được, bạn kiểm tra mạng và thử lại nhé.';
+          $('submit-error').hidden = false;
+        }).then(function () {
+          state.sending = false;
+          $('btn-submit').disabled = false;
+          $('submit-label').textContent = 'Gửi xác nhận';
+        });
+      });
+
+      // ---------- EDIT AGAIN ----------
+      $('btn-edit').addEventListener('click', function () {
+        $('confirm-box').hidden = true;
+        $('rsvp-form').hidden = false;
+        state.submitted = false;
+      });
+
+      // ---------- RESTORE PREVIOUS RSVP ----------
+      (function restore() {
+        try {
+          var s = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+          if (s && s.name) {
+            $('rsvp-name').value = s.name;
+            setAttending(s.attending || 'yes');
+            if (s.guests) $('rsvp-guests').value = s.guests;
+            if (s.wishes) { $('rsvp-wishes').value = s.wishes; $('wish-len').textContent = s.wishes.length; }
+            showConfirm(s.name, s.attending || 'yes', s.guests || '1');
+          }
+        } catch (e) {}
+      })();
+
+      // ---------- COPY LINK ----------
+      $('btn-copy').addEventListener('click', function () {
+        var url = window.location.href;
+        function done() {
+          $('copy-label').textContent = 'Đã sao chép liên kết';
+          clearTimeout(copyTimer);
+          copyTimer = setTimeout(function () { $('copy-label').textContent = 'Sao chép liên kết'; }, 2200);
+        }
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () {});
+            return;
+          }
+        } catch (e) {}
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = url; ta.style.position = 'fixed'; ta.style.top = '-9999px';
+          document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+          done();
+        } catch (e) {}
+      });
+    })();
+  </script>
 </body>
 
 </html>
