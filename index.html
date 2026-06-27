@@ -4,172 +4,187 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thiệp Mời Tốt Nghiệp — Quách Ngọc Quang</title>
-  <meta name="description" content="Thiệp mời lễ tốt nghiệp Quách Ngọc Quang — 05/07/2026, Hội trường Nguyễn Văn Đạo">
-  <meta property="og:title" content="Thiệp Mời Tốt Nghiệp — Quách Ngọc Quang">
-  <meta property="og:description" content="Mời bạn đến dự lễ tốt nghiệp — 05/07/2026">
+  <title>Thiệp mời Lễ Tốt Nghiệp · Quách Ngọc Quang</title>
+  <meta name="description" content="Trân trọng mời bạn đến dự Lễ Tốt Nghiệp của Quách Ngọc Quang — 10:00, Chủ Nhật 05/07/2026 tại Hội trường Nguyễn Văn Đạo.">
   <meta property="og:type" content="website">
+  <meta property="og:title" content="Thiệp mời Lễ Tốt Nghiệp · Quách Ngọc Quang">
+  <meta property="og:description" content="10:00, Chủ Nhật 05/07/2026 · Hội trường Nguyễn Văn Đạo. Bấm để mở thiệp và xác nhận tham dự.">
   <meta property="og:image" content="https://t1qnq.github.io/graduation-invitation-quang/preview.png">
   <link rel="canonical" href="https://t1qnq.github.io/graduation-invitation-quang/">
   <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2316332b' stroke='%23c5a253' stroke-width='3'/><text x='50' y='65' text-anchor='middle' font-size='50'>🎓</text></svg>">
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231f3a30' stroke='%23c2a25f' stroke-width='3'/><text x='50' y='65' text-anchor='middle' font-size='50'>🎓</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap"
     rel="stylesheet">
   <style>
+    :root {
+      --gold: #c2a25f;
+      --gold-muted: rgb(168, 145, 93);
+      --gold-07: rgba(194, 162, 95, .07);
+      --gold-16: rgba(194, 162, 95, .16);
+      --gold-22: rgba(194, 162, 95, .22);
+      --gold-25: rgba(194, 162, 95, .25);
+      --gold-28: rgba(194, 162, 95, .28);
+      --gold-30: rgba(194, 162, 95, .30);
+      --gold-40: rgba(194, 162, 95, .40);
+      --gold-50: rgba(194, 162, 95, .50);
+      --page: #ece3d0;
+      --page-hi: #f6efe0;
+      --ink: #1f3a30;
+    }
+
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
-    body {
-      background: #0c1d18;
-      font-family: 'Jost', sans-serif;
-    }
+    body { background: var(--page); font-family: 'Be Vietnam Pro', sans-serif; }
 
     @keyframes chevBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
     @keyframes sealFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes shakeX {
+      10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); }
+      30%, 50%, 70% { transform: translateX(-4px); } 40%, 60% { transform: translateX(4px); }
+    }
 
-    input::placeholder, textarea::placeholder { color: #a6b0a7; }
-    input:focus, select:focus, textarea:focus { border-color: #c5a253 !important; }
+    .seal-float { display: inline-flex; color: var(--gold); animation: sealFloat 5s ease-in-out infinite; }
+    .chev { color: var(--gold); animation: chevBounce 1.7s ease-in-out infinite; }
+
+    /* scroll reveal */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .75s cubic-bezier(.2, .7, .2, 1); will-change: opacity, transform; }
+    .reveal.in { opacity: 1; transform: none; }
 
     .page {
       min-height: 100vh;
-      background:
-        radial-gradient(150% 110% at 50% -8%, #1f463a 0%, rgba(18, 48, 39, 0) 52%),
-        linear-gradient(180deg, #0f261f, #0a1813);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      background: radial-gradient(140% 100% at 50% -6%, var(--page-hi) 0%, rgba(255, 255, 255, 0) 55%), var(--page);
+      display: flex; justify-content: center; align-items: flex-start;
     }
-
     .card {
-      position: relative;
-      width: 100%;
-      max-width: 480px;
-      min-height: 100vh;
-      background: #f7f2e8;
-      background-image: radial-gradient(120% 60% at 50% 0%, #fffdf8 0%, rgba(255, 253, 248, 0) 55%);
-      box-shadow: 0 40px 90px rgba(0, 0, 0, .55);
-      overflow: hidden;
+      position: relative; width: 100%; max-width: 480px; min-height: 100vh;
+      background: #fdfbf5;
+      background-image: radial-gradient(120% 50% at 50% 0%, #ffffff 0%, rgba(255, 255, 255, 0) 60%);
+      box-shadow: 0 30px 80px rgba(60, 46, 18, .16); overflow: hidden;
     }
+    .card-frame { position: absolute; inset: 14px; border: 1px solid var(--gold-28); pointer-events: none; z-index: 3; }
 
     /* HERO */
-    .hero { padding: 58px 34px 8px; text-align: center; }
-    .seal-float { display: inline-flex; color: #c5a253; animation: sealFloat 5s ease-in-out infinite; }
-    .eyebrow { margin-top: 18px; font-size: 11px; letter-spacing: .42em; text-transform: uppercase; color: #9a8a5e; }
-    .hero-name {
-      font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 46px;
-      line-height: 1.04; color: #16332b; margin: 14px 0 0; letter-spacing: .01em;
-    }
+    .hero { padding: 60px 36px 8px; text-align: center; }
+    .eyebrow { margin-top: 18px; font-size: 11px; letter-spacing: .42em; text-transform: uppercase; color: var(--gold-muted); }
+    .hero-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 46px; line-height: 1.04; color: var(--ink); margin: 14px 0 0; letter-spacing: .01em; }
     .ornament { display: flex; align-items: center; justify-content: center; gap: 13px; margin: 22px 0 18px; }
-    .ornament .line-l { width: 42px; height: 1px; background: linear-gradient(90deg, transparent, #c5a253); }
-    .ornament .line-r { width: 42px; height: 1px; background: linear-gradient(90deg, #c5a253, transparent); }
-    .ornament .diamond { width: 5px; height: 5px; background: #c5a253; transform: rotate(45deg); }
-    .hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: #4a5a50; }
-    .hero-msg { font-size: 14.5px; line-height: 1.85; color: #5c6b62; max-width: 340px; margin: 24px auto 0; font-weight: 300; }
+    .ornament .l { width: 42px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+    .ornament .r { width: 42px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); }
+    .ornament .d { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); }
+    .hero-deg { font-family: 'Playfair Display', serif; font-style: italic; font-size: 22px; color: #3f5249; }
+    .hero-school { margin-top: 8px; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: #9aa79c; }
+    .hero-para { font-size: 14.5px; line-height: 1.85; color: #5c6b61; max-width: 340px; margin: 24px auto 0; font-weight: 300; }
 
     /* COUNTDOWN */
-    .countdown { padding: 38px 34px 12px; }
-    .countdown-title { text-align: center; font-size: 10.5px; letter-spacing: .32em; text-transform: uppercase; color: #9aa79e; margin-bottom: 16px; }
+    .countdown { padding: 38px 36px 12px; }
+    .cd-label { text-align: center; font-size: 10.5px; letter-spacing: .32em; text-transform: uppercase; color: #9aa79c; margin-bottom: 16px; }
     .cd-row { display: flex; gap: 9px; }
-    .cd-unit { flex: 1; padding: 16px 4px; text-align: center; background: #fcf9f2; border: 1px solid rgba(22, 51, 43, .1); }
-    .cd-num { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 34px; line-height: 1; color: #16332b; }
-    .cd-num.accent { color: #c5a253; }
-    .cd-label { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: #9aa79e; margin-top: 7px; }
-    .countdown-msg { text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; color: #4a5a50; padding: 6px 0; }
+    .cd-unit { flex: 1; padding: 16px 4px; text-align: center; background: #fff; border: 1px solid var(--gold-25); }
+    .cd-num { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 34px; line-height: 1; color: var(--ink); }
+    .cd-num.accent { color: var(--gold); }
+    .cd-unit-label { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: #9aa79c; margin-top: 7px; }
+    .cd-passed { text-align: center; padding: 6px 0 2px; }
+    .cd-passed p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 24px; color: var(--ink); margin: 14px 0 0; }
+    .cd-passed .sub { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-muted); margin-top: 9px; }
 
     /* DETAILS */
-    .details { padding: 36px 34px 6px; }
-    .detail-row { display: flex; align-items: center; gap: 16px; padding: 17px 0; border-top: 1px solid rgba(22, 51, 43, .1); }
-    .detail-row.last { border-bottom: 1px solid rgba(22, 51, 43, .1); }
-    .detail-ic { flex: none; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; color: #c5a253; }
-    .detail-body { flex: 1; }
-    .detail-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #9aa79e; }
-    .detail-value { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #16332b; margin-top: 1px; }
+    .details { padding: 36px 36px 6px; }
+    .dt-row { display: flex; align-items: center; gap: 16px; padding: 17px 0; border-top: 1px solid rgba(31, 58, 48, .1); }
+    .dt-row.last { border-bottom: 1px solid rgba(31, 58, 48, .1); }
+    .dt-ic { flex: none; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; color: var(--gold); }
+    .dt-body { flex: 1; }
+    .dt-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #9aa79c; }
+    .dt-value { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); margin-top: 1px; }
+    .dt-addr { font-size: 12px; color: #7c8a80; margin-top: 3px; font-weight: 300; }
+    .map-box { margin-top: 22px; padding: 6px; background: #fff; border: 1px solid var(--gold-30); }
+    .map-box iframe { display: block; width: 100%; border: 0; filter: saturate(.82); }
     .maps-link {
-      display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 22px;
-      padding: 14px; border: 1px solid #c5a253; color: #16332b; text-decoration: none;
-      font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase;
-      background: rgba(197, 162, 83, .08); transition: background .25s;
+      display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 12px; padding: 14px;
+      border: 1px solid var(--gold); color: var(--ink); text-decoration: none; font-size: 12.5px;
+      letter-spacing: .08em; text-transform: uppercase; background: var(--gold-07); transition: background .25s;
     }
-    .maps-link:hover { background: rgba(197, 162, 83, .18); }
+    .maps-link:hover { background: var(--gold-16); }
+    .maps-link .ic { display: inline-flex; color: var(--gold); }
 
     /* RSVP */
-    .rsvp { margin: 40px 0 0; padding: 42px 34px 44px; background: linear-gradient(180deg, #16332b, #102620); }
+    .rsvp { margin: 40px 0 0; padding: 42px 36px 44px; background: linear-gradient(180deg, #f6efe0, #efe5d1); border-top: 1px solid var(--gold-30); }
     .rsvp-head { text-align: center; }
-    .rsvp-eyebrow { font-size: 10.5px; letter-spacing: .34em; text-transform: uppercase; color: #c5a253; }
-    .rsvp-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 32px; color: #f3ead6; margin: 8px 0 0; }
-    .rsvp-note { font-size: 13px; color: #a9bcae; font-weight: 300; margin: 10px 0 0; }
-    .field-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #9fb3a6; margin-bottom: 8px; }
+    .rsvp-eyebrow { font-size: 10.5px; letter-spacing: .34em; text-transform: uppercase; color: var(--gold-muted); }
+    .rsvp-title { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 32px; color: var(--ink); margin: 8px 0 0; }
+    .rsvp-note { font-size: 13px; color: #6f7d6f; font-weight: 300; margin: 10px 0 0; }
+    .field-label { display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #6f7d6f; margin-bottom: 8px; }
     .input, .select, .textarea {
-      width: 100%; padding: 13px 14px; border: 1px solid rgba(247, 242, 232, .22);
-      background: rgba(247, 242, 232, .05); color: #f3ead6; font-family: 'Jost', sans-serif;
-      font-size: 15px; outline: none; border-radius: 0;
+      width: 100%; padding: 13px 14px; border: 1px solid var(--gold-40); background: #fff; color: var(--ink);
+      font-family: 'Be Vietnam Pro', sans-serif; font-size: 15px; outline: none; border-radius: 0;
     }
+    .input:focus, .select:focus, .textarea:focus { border-color: var(--gold) !important; }
+    .input.err { border-color: #c2683f; animation: shakeX .45s cubic-bezier(.36, .07, .19, .97); }
     .select { appearance: none; }
-    .select option { color: #16332b; }
     .textarea { resize: vertical; line-height: 1.6; }
-    .field-error { font-size: 12px; color: #e5a37a; margin-top: 7px; }
-    .attend-row { display: flex; gap: 10px; }
-    .attend-btn {
-      flex: 1; padding: 13px; border: 1px solid rgba(197, 162, 83, .5); cursor: pointer;
-      font-family: 'Jost', sans-serif; font-size: 14px; letter-spacing: .04em; transition: all .25s;
-      background: transparent; color: #dfe8e0;
+    .field-error { font-size: 12px; color: #c2683f; margin-top: 7px; }
+    input::placeholder, textarea::placeholder { color: #9aa79c; }
+
+    .att-row { display: flex; gap: 10px; }
+    .att-btn {
+      flex: 1; padding: 13px; border: 1px solid var(--gold-40); cursor: pointer; font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 14px; letter-spacing: .04em; transition: all .25s; background: #fff; color: #5d6b61;
     }
-    .attend-btn.active { background: #c5a253; color: #102620; }
+    .att-btn.active { background: var(--gold); color: var(--ink); border-color: var(--gold); }
     .wish-head { display: flex; align-items: baseline; justify-content: space-between; margin: 22px 0 8px; }
-    .wish-head .label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #9fb3a6; }
-    .wish-head .count { font-size: 11px; color: #6f857a; }
+    .wish-head .count { font-size: 11px; color: #9aa79c; }
     .btn-submit {
-      width: 100%; margin-top: 24px; padding: 16px; background: #c5a253; color: #102620; border: none;
-      cursor: pointer; font-family: 'Jost', sans-serif; font-size: 12.5px; letter-spacing: .22em;
-      text-transform: uppercase; font-weight: 500; transition: background .25s;
+      width: 100%; margin-top: 24px; padding: 16px; background: var(--ink); color: #f3ead6; border: none; cursor: pointer;
+      font-family: 'Be Vietnam Pro', sans-serif; font-size: 12.5px; letter-spacing: .22em; text-transform: uppercase; font-weight: 500; transition: background .25s;
     }
-    .btn-submit:hover { background: #d8bd7e; }
+    .btn-submit:hover { background: #28473b; }
+    .submit-error { font-size: 12px; color: #c2683f; margin-top: 10px; text-align: center; }
 
-    .confirm-box { margin-top: 30px; text-align: center; border: 1px solid rgba(197, 162, 83, .4); padding: 34px 24px; background: rgba(197, 162, 83, .06); }
-    .confirm-check { width: 54px; height: 54px; border-radius: 50%; border: 1px solid #c5a253; display: inline-flex; align-items: center; justify-content: center; color: #c5a253; }
-    .confirm-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; color: #f3ead6; margin: 16px 0 0; }
-    .confirm-text { font-size: 14px; color: #bccabf; font-weight: 300; line-height: 1.7; margin: 10px 0 0; }
-    .edit-again { margin-top: 18px; background: none; border: none; color: #c5a253; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
+    .confirm-box { margin-top: 30px; text-align: center; border: 1px solid var(--gold-40); padding: 34px 24px; background: #fff; }
+    .confirm-check { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--gold); display: inline-flex; align-items: center; justify-content: center; color: var(--gold); }
+    .confirm-title { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 26px; color: var(--ink); margin: 16px 0 0; }
+    .confirm-text { font-size: 14px; color: #5c6b61; font-weight: 300; line-height: 1.7; margin: 10px 0 0; }
+    .edit-again { margin-top: 18px; background: none; border: none; color: var(--gold); cursor: pointer; font-family: 'Be Vietnam Pro', sans-serif; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
 
-    /* SHARE + FOOTER */
-    .footer { padding: 40px 34px 54px; text-align: center; }
+    /* FOOTER */
+    .footer { padding: 40px 36px 56px; text-align: center; }
     .share-btn {
-      display: inline-flex; align-items: center; gap: 9px; padding: 12px 22px; border: 1px solid #c5a253;
-      background: rgba(197, 162, 83, .08); color: #16332b; cursor: pointer; font-family: 'Jost', sans-serif;
+      display: inline-flex; align-items: center; gap: 9px; padding: 12px 22px; border: 1px solid var(--gold);
+      background: var(--gold-07); color: var(--ink); cursor: pointer; font-family: 'Be Vietnam Pro', sans-serif;
       font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; transition: background .25s;
     }
-    .share-btn:hover { background: rgba(197, 162, 83, .18); }
-    .footer-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; color: #4a5a50; margin: 14px 0 0; }
-    .footer-credit { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: #9aa79e; margin-top: 10px; }
+    .share-btn:hover { background: var(--gold-16); }
+    .share-btn .ic { display: inline-flex; color: var(--gold); }
+    .footer-text p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 19px; color: #3f5249; margin: 14px 0 0; }
+    .footer-credit { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: #9aa79c; margin-top: 10px; }
 
     /* COVER */
     .cover {
-      position: fixed; inset: 0; z-index: 50; cursor: pointer;
+      position: fixed; inset: 0; z-index: 50; cursor: pointer; outline: none;
       transition: transform 1.15s cubic-bezier(.76, 0, .24, 1), opacity .85s ease;
-      background:
-        radial-gradient(125% 80% at 50% 0%, #21483b 0%, rgba(16, 38, 32, 0) 60%),
-        linear-gradient(180deg, rgba(19, 48, 39, 0), #0c1d18), #0f261f;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 54px 30px; text-align: center;
+      background: radial-gradient(120% 78% at 50% 0%, var(--page-hi) 0%, rgba(255, 255, 255, 0) 60%), #f3ecdd;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 54px 30px; text-align: center;
     }
     .cover.opened { transform: translateY(-106%); opacity: 0; pointer-events: none; }
-    .cover-frame-1 { position: absolute; inset: 16px; border: 1px solid rgba(197, 162, 83, .5); pointer-events: none; }
-    .cover-frame-2 { position: absolute; inset: 22px; border: 1px solid rgba(197, 162, 83, .2); pointer-events: none; }
+    .cover-frame-1 { position: absolute; inset: 16px; border: 1px solid var(--gold-50); pointer-events: none; }
+    .cover-frame-2 { position: absolute; inset: 22px; border: 1px solid var(--gold-22); pointer-events: none; }
     .cover-main { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
-    .cover-eyebrow { margin-top: 22px; font-size: 11px; letter-spacing: .46em; text-transform: uppercase; color: #c5a253; }
-    .cover-name { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 52px; line-height: 1.05; color: #f3ead6; margin: 18px 0 0; }
-    .cover-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 25px; color: #cfd8cd; }
-    .cover-date { margin-top: 14px; font-size: 14px; letter-spacing: .3em; color: #9fb3a6; }
+    .cover-eyebrow { margin-top: 22px; font-size: 11px; letter-spacing: .46em; text-transform: uppercase; color: var(--gold-muted); }
+    .cover-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 52px; line-height: 1.05; color: var(--ink); margin: 18px 0 0; }
+    .cover-deg { font-family: 'Playfair Display', serif; font-style: italic; font-size: 25px; color: #3f5249; }
+    .cover-date { margin-top: 14px; font-size: 14px; letter-spacing: .3em; color: var(--gold-muted); }
     .cover-cta { flex: none; display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 28px; }
-    .cover-cta-label { font-size: 11px; letter-spacing: .34em; text-transform: uppercase; color: #c5a253; }
-    .cover-chev { color: #c5a253; animation: chevBounce 1.7s ease-in-out infinite; }
+    .cover-cta-label { font-size: 11px; letter-spacing: .34em; text-transform: uppercase; color: var(--gold); }
 
     @media (prefers-reduced-motion: reduce) {
-      .seal-float, .cover-chev { animation: none !important; }
+      * { animation: none !important; }
+      .reveal { opacity: 1; transform: none; }
       .cover { transition: opacity .3s ease; }
     }
+
+    .gradSvg { width: 100%; height: 100%; }
   </style>
 </head>
 
@@ -177,92 +192,97 @@
   <div class="page">
     <!-- ===================== INVITATION CARD ===================== -->
     <div class="card">
+      <div class="card-frame" aria-hidden="true"></div>
 
       <!-- HERO -->
       <div class="hero">
-        <div class="seal-float" aria-hidden="true">
-          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#c5a253" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 8 12 13l10.5-5L12 3Z"></path><path d="M22.5 8v5"></path><path d="M6 10.4V15c0 1.25 2.7 2.5 6 2.5s6-1.25 6-2.5v-4.6"></path></svg>
+        <div class="reveal" data-reveal style="transition-delay:0s">
+          <span class="seal-float" aria-hidden="true">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 8 12 13l10.5-5L12 3Z"></path><path d="M22.5 8v5"></path><path d="M6 10.4V15c0 1.25 2.7 2.5 6 2.5s6-1.25 6-2.5v-4.6"></path></svg>
+          </span>
         </div>
-        <div class="eyebrow">Lễ tốt nghiệp của</div>
-        <h1 class="hero-name">Quách<br>Ngọc Quang</h1>
-        <div class="ornament" aria-hidden="true">
-          <span class="line-l"></span><span class="diamond"></span><span class="line-r"></span>
+        <div class="eyebrow reveal" data-reveal style="transition-delay:.05s">Lễ tốt nghiệp của</div>
+        <h1 class="hero-name reveal" data-reveal style="transition-delay:.12s">Quách<br>Ngọc Quang</h1>
+        <div class="ornament reveal" data-reveal style="transition-delay:.2s" aria-hidden="true">
+          <span class="l"></span><span class="d"></span><span class="r"></span>
         </div>
-        <div class="hero-sub">Lễ Tốt Nghiệp</div>
-        <p class="hero-msg">Mình trân trọng mời bạn đến dự lễ tốt nghiệp của mình. Sự hiện diện của bạn sẽ là món quà ý nghĩa nhất trong ngày đặc biệt này.</p>
+        <div class="hero-deg reveal" data-reveal style="transition-delay:.26s">Kỹ sư Kỹ thuật Máy tính</div>
+        <div class="hero-school reveal" data-reveal style="transition-delay:.3s">Trường Đại học Công nghệ · ĐHQG Hà Nội</div>
+        <p class="hero-para reveal" data-reveal style="transition-delay:.36s">Mình trân trọng mời bạn đến dự lễ tốt nghiệp của mình. Sự hiện diện của bạn sẽ là món quà ý nghĩa nhất trong ngày đặc biệt này.</p>
       </div>
 
       <!-- COUNTDOWN -->
       <div class="countdown">
-        <div class="countdown-title">Đếm ngược đến ngày trọng đại</div>
-        <div class="cd-row" id="cd-row" role="timer" aria-label="Đếm ngược tới buổi lễ">
-          <div class="cd-unit"><div class="cd-num" id="cd-days">--</div><div class="cd-label">Ngày</div></div>
-          <div class="cd-unit"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">Giờ</div></div>
-          <div class="cd-unit"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">Phút</div></div>
-          <div class="cd-unit"><div class="cd-num accent" id="cd-secs">--</div><div class="cd-label">Giây</div></div>
+        <div id="cd-live">
+          <div class="cd-label reveal" data-reveal style="transition-delay:0s">Đếm ngược đến ngày trọng đại</div>
+          <div class="cd-row" role="timer" aria-label="Đếm ngược tới buổi lễ">
+            <div class="cd-unit reveal" data-reveal style="transition-delay:.05s"><div class="cd-num" id="cd-days">--</div><div class="cd-unit-label">Ngày</div></div>
+            <div class="cd-unit reveal" data-reveal style="transition-delay:.11s"><div class="cd-num" id="cd-hours">--</div><div class="cd-unit-label">Giờ</div></div>
+            <div class="cd-unit reveal" data-reveal style="transition-delay:.17s"><div class="cd-num" id="cd-mins">--</div><div class="cd-unit-label">Phút</div></div>
+            <div class="cd-unit reveal" data-reveal style="transition-delay:.23s"><div class="cd-num accent" id="cd-secs">--</div><div class="cd-unit-label">Giây</div></div>
+          </div>
         </div>
-        <div class="countdown-msg" id="countdown-msg" role="status" aria-live="polite" hidden></div>
+        <div id="cd-passed" class="cd-passed" hidden>
+          <span class="seal-float" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 8 12 13l10.5-5L12 3Z"></path><path d="M22.5 8v5"></path><path d="M6 10.4V15c0 1.25 2.7 2.5 6 2.5s6-1.25 6-2.5v-4.6"></path></svg></span>
+          <p>Khoảnh khắc trọng đại đã đến</p>
+          <div class="sub">Chúc mừng tân kỹ sư</div>
+        </div>
       </div>
 
       <!-- DETAILS -->
       <div class="details">
-        <div class="detail-row">
-          <div class="detail-ic" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="1.5"></rect><path d="M3 9.5h18M8 2.5v4M16 2.5v4"></path></svg>
-          </div>
-          <div class="detail-body">
-            <div class="detail-label">Ngày</div>
-            <div class="detail-value">Chủ Nhật, 05 / 07 / 2026</div>
-          </div>
+        <div class="dt-row reveal" data-reveal style="transition-delay:0s">
+          <div class="dt-ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="1.5"></rect><path d="M3 9.5h18M8 2.5v4M16 2.5v4"></path></svg></div>
+          <div class="dt-body"><div class="dt-label">Ngày</div><div class="dt-value">Chủ Nhật, 05 / 07 / 2026</div></div>
         </div>
-        <div class="detail-row">
-          <div class="detail-ic" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.2 2"></path></svg>
-          </div>
-          <div class="detail-body">
-            <div class="detail-label">Thời gian</div>
-            <div class="detail-value">10:00 – 11:45</div>
-          </div>
+        <div class="dt-row reveal" data-reveal style="transition-delay:.08s">
+          <div class="dt-ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.2 2"></path></svg></div>
+          <div class="dt-body"><div class="dt-label">Thời gian</div><div class="dt-value">10:00 – 11:45</div></div>
         </div>
-        <div class="detail-row last">
-          <div class="detail-ic" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
-          </div>
-          <div class="detail-body">
-            <div class="detail-label">Địa điểm</div>
-            <div class="detail-value">Hội trường Nguyễn Văn Đạo</div>
-          </div>
+        <div class="dt-row last reveal" data-reveal style="transition-delay:.16s">
+          <div class="dt-ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></div>
+          <div class="dt-body"><div class="dt-label">Địa điểm</div><div class="dt-value">Hội trường Nguyễn Văn Đạo</div><div class="dt-addr">144 Xuân Thủy, Cầu Giấy, Hà Nội</div></div>
         </div>
-        <a class="maps-link"
+
+        <div class="map-box reveal" data-reveal style="transition-delay:.22s">
+          <iframe title="Bản đồ Hội trường Nguyễn Văn Đạo"
+            src="https://www.google.com/maps?q=H%E1%BB%99i%20tr%C6%B0%E1%BB%9Dng%20Nguy%E1%BB%85n%20V%C4%83n%20%C4%90%E1%BA%A1o,%20144%20Xu%C3%A2n%20Th%E1%BB%A7y,%20C%E1%BA%A7u%20Gi%E1%BA%A5y,%20H%C3%A0%20N%E1%BB%99i&output=embed"
+            width="100%" height="190" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <a class="maps-link reveal" data-reveal style="transition-delay:.3s"
           href="https://www.google.com/maps/search/?api=1&query=H%E1%BB%99i%20tr%C6%B0%E1%BB%9Dng%20Nguy%E1%BB%85n%20V%C4%83n%20%C4%90%E1%BA%A1o%20VNU"
           target="_blank" rel="noopener">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5a253" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></span>
           Chỉ đường (Google Maps)
         </a>
       </div>
 
       <!-- RSVP -->
       <div class="rsvp">
-        <div class="rsvp-head">
-          <div class="rsvp-eyebrow">Phúc đáp</div>
+        <div class="rsvp-head reveal" data-reveal style="transition-delay:0s">
+          <div class="rsvp-eyebrow">Phản hồi</div>
           <h2 class="rsvp-title">Xác nhận tham dự</h2>
-          <p class="rsvp-note">Vui lòng phản hồi trước ngày 30 / 06 / 2026</p>
+          <p class="rsvp-note">Vui lòng phản hồi trước ngày 05 / 07 / 2026</p>
         </div>
 
-        <!-- FORM -->
         <div id="rsvp-form" style="margin-top:30px">
-          <div class="field-label">Họ và tên</div>
-          <input class="input" id="rsvp-name" type="text" placeholder="Nhập họ và tên của bạn" autocomplete="name">
-          <div class="field-error" id="name-error" hidden>Vui lòng nhập họ và tên của bạn.</div>
+          <div>
+            <label class="field-label" for="rsvp-name">Họ và tên</label>
+            <input class="input" id="rsvp-name" type="text" placeholder="Nhập họ và tên của bạn" autocomplete="name" aria-required="true">
+            <div class="field-error" id="name-error" role="alert" hidden>Vui lòng nhập họ và tên của bạn.</div>
+          </div>
 
-          <div class="field-label" style="margin-top:22px">Bạn sẽ tham dự chứ?</div>
-          <div class="attend-row">
-            <button type="button" class="attend-btn active" id="btn-yes" data-value="yes">Có, mình sẽ đến</button>
-            <button type="button" class="attend-btn" id="btn-no" data-value="no">Tiếc là không</button>
+          <div>
+            <div class="field-label" style="margin-top:22px">Bạn sẽ tham dự chứ?</div>
+            <div class="att-row" role="group" aria-label="Bạn sẽ tham dự chứ?">
+              <button type="button" class="att-btn active" id="btn-yes" aria-pressed="true">Có, mình sẽ đến</button>
+              <button type="button" class="att-btn" id="btn-no" aria-pressed="false">Tiếc là không</button>
+            </div>
           </div>
 
           <div id="guests-group" style="margin-top:22px">
-            <div class="field-label">Số người tham dự</div>
+            <label class="field-label" for="rsvp-guests">Số người tham dự</label>
             <select class="select" id="rsvp-guests">
               <option value="1">1 người</option>
               <option value="2">2 người</option>
@@ -272,44 +292,45 @@
             </select>
           </div>
 
-          <div class="wish-head">
-            <span class="label">Lời chúc (tùy chọn)</span>
-            <span class="count"><span id="wish-len">0</span> / 500</span>
+          <div>
+            <div class="wish-head">
+              <label class="field-label" style="margin:0" for="rsvp-wishes">Lời chúc (tùy chọn)</label>
+              <span class="count"><span id="wish-len">0</span> / 500</span>
+            </div>
+            <textarea class="textarea" id="rsvp-wishes" rows="3" maxlength="500" placeholder="Gửi đôi lời chúc mừng đến Quang…"></textarea>
           </div>
-          <textarea class="textarea" id="rsvp-wishes" rows="3" maxlength="500" placeholder="Gửi đôi lời chúc mừng đến Quang…"></textarea>
 
           <button type="button" class="btn-submit" id="btn-submit"><span id="submit-label">Gửi xác nhận</span></button>
-          <div class="field-error" id="submit-error" hidden style="text-align:center; color:#e5a37a"></div>
+          <div class="submit-error" id="submit-error" hidden></div>
         </div>
 
-        <!-- CONFIRMATION -->
         <div class="confirm-box" id="confirm-box" hidden role="status" aria-live="polite">
-          <div class="confirm-check" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
-          </div>
+          <div class="confirm-check" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
           <h3 class="confirm-title">Đã ghi nhận!</h3>
           <p class="confirm-text" id="confirm-text"></p>
           <button type="button" class="edit-again" id="btn-edit">Chỉnh sửa phản hồi</button>
         </div>
       </div>
 
-      <!-- SHARE + FOOTER -->
+      <!-- FOOTER -->
       <div class="footer">
-        <button type="button" class="share-btn" id="btn-copy">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c5a253" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 14.5l5-5"></path><path d="M11.5 7.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"></path><path d="M12.5 16.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"></path></svg>
-          <span id="copy-label">Sao chép liên kết</span>
-        </button>
-
-        <div class="ornament" style="margin:40px 0 22px" aria-hidden="true">
-          <span class="line-l"></span><span class="diamond"></span><span class="line-r"></span>
+        <div class="reveal" data-reveal style="transition-delay:0s">
+          <button type="button" class="share-btn" id="btn-copy">
+            <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 14.5l5-5"></path><path d="M11.5 7.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"></path><path d="M12.5 16.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"></path></svg></span>
+            <span id="copy-label">Sao chép liên kết</span>
+          </button>
         </div>
-        <div style="display:inline-flex;color:#c5a253" aria-hidden="true">
+        <div class="ornament reveal" data-reveal style="transition-delay:.08s; margin:40px 0 22px" aria-hidden="true">
+          <span class="l"></span><span class="d"></span><span class="r"></span>
+        </div>
+        <div class="seal-float reveal" data-reveal style="transition-delay:.15s" aria-hidden="true">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 8 12 13l10.5-5L12 3Z"></path><path d="M22.5 8v5"></path><path d="M6 10.4V15c0 1.25 2.7 2.5 6 2.5s6-1.25 6-2.5v-4.6"></path></svg>
         </div>
-        <p class="footer-sub">Hẹn gặp bạn tại buổi lễ</p>
-        <div class="footer-credit">Quách Ngọc Quang · 2026</div>
+        <div class="footer-text reveal" data-reveal style="transition-delay:.21s">
+          <p>Hẹn gặp bạn tại buổi lễ</p>
+          <div class="footer-credit">Quách Ngọc Quang · 2026</div>
+        </div>
       </div>
-
     </div>
   </div>
 
@@ -317,25 +338,21 @@
   <div class="cover" id="cover" role="button" tabindex="0" aria-label="Chạm để mở thiệp mời">
     <div class="cover-frame-1" aria-hidden="true"></div>
     <div class="cover-frame-2" aria-hidden="true"></div>
-
     <div class="cover-main">
-      <div class="seal-float" aria-hidden="true">
-        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#c5a253" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 8 12 13l10.5-5L12 3Z"></path><path d="M22.5 8v5"></path><path d="M6 10.4V15c0 1.25 2.7 2.5 6 2.5s6-1.25 6-2.5v-4.6"></path></svg>
-      </div>
+      <span class="seal-float" aria-hidden="true">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 8 12 13l10.5-5L12 3Z"></path><path d="M22.5 8v5"></path><path d="M6 10.4V15c0 1.25 2.7 2.5 6 2.5s6-1.25 6-2.5v-4.6"></path></svg>
+      </span>
       <div class="cover-eyebrow">Thiệp mời · Lễ tốt nghiệp</div>
       <h1 class="cover-name">Quách<br>Ngọc Quang</h1>
       <div class="ornament" style="margin:24px 0" aria-hidden="true">
-        <span class="line-l" style="width:46px"></span><span class="diamond"></span><span class="line-r" style="width:46px"></span>
+        <span class="l" style="width:46px"></span><span class="d"></span><span class="r" style="width:46px"></span>
       </div>
-      <div class="cover-sub">Lễ Tốt Nghiệp</div>
+      <div class="cover-deg">Kỹ sư Kỹ thuật Máy tính</div>
       <div class="cover-date">05 · 07 · 2026</div>
     </div>
-
     <div class="cover-cta">
       <div class="cover-cta-label">Chạm để mở thiệp</div>
-      <div class="cover-chev" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
-      </div>
+      <div class="chev" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></div>
     </div>
   </div>
 
@@ -345,16 +362,16 @@
 
       var EVENT_DATETIME = '2026-07-05T10:00:00+07:00';
       var STORAGE_KEY = 'rsvp_quang';
-      var MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=H%E1%BB%99i%20tr%C6%B0%E1%BB%9Dng%20Nguy%E1%BB%85n%20V%C4%83n%20%C4%90%E1%BA%A1o%20VNU';
 
-      // ⬇️ DÁN ĐƯỜNG LINK WEB APP CỦA GOOGLE APPS SCRIPT VÀO ĐÂY
-      // (xem file HUONG-DAN-GOOGLE-SHEETS.md). Để trống = chỉ lưu trong trình duyệt.
+      // ⬇️ Link Web App Google Apps Script (xem HUONG-DAN-GOOGLE-SHEETS.md). Để trống = chỉ lưu trong trình duyệt.
       var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzO4Y5RWc8Z6yxnT5qG9OlzyZEBovolMqXaGb8vspBaz1i31QOqBe0BmbiXGMcAxZa6Vg/exec';
 
       var state = { attending: 'yes', submitted: false, sending: false };
       var copyTimer = null;
 
       function $(id) { return document.getElementById(id); }
+      var reduceMotion = false;
+      try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
       // ---------- COVER ----------
       function openCover() {
@@ -363,6 +380,7 @@
         cover.classList.add('opened');
         try { document.body.style.overflow = ''; } catch (e) {}
         window.scrollTo(0, 0);
+        startReveal();
       }
       (function initCover() {
         try { document.body.style.overflow = 'hidden'; } catch (e) {}
@@ -373,17 +391,30 @@
         });
       })();
 
+      // ---------- SCROLL REVEAL ----------
+      var revealStarted = false;
+      function revealAll() {
+        document.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('in'); });
+      }
+      function startReveal() {
+        if (revealStarted) return;
+        revealStarted = true;
+        if (reduceMotion || !('IntersectionObserver' in window)) { revealAll(); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+      }
+
       // ---------- COUNTDOWN ----------
       function pad(n) { return String(n).padStart(2, '0'); }
       function renderCountdown() {
-        var target = Date.parse(EVENT_DATETIME);
-        var diff = target - Date.now();
-        var row = $('cd-row');
-        var msg = $('countdown-msg');
+        var diff = Date.parse(EVENT_DATETIME) - Date.now();
         if (diff <= 0) {
-          row.style.display = 'none';
-          msg.hidden = false;
-          msg.textContent = 'Buổi lễ đã diễn ra — cảm ơn bạn!';
+          $('cd-live').hidden = true;
+          $('cd-passed').hidden = false;
           return true;
         }
         var totalSec = Math.floor(diff / 1000);
@@ -398,53 +429,49 @@
         var t = setInterval(function () { if (renderCountdown()) clearInterval(t); }, 1000);
       })();
 
-      // ---------- ATTENDANCE TOGGLE ----------
+      // ---------- ATTENDANCE ----------
       function setAttending(val) {
         state.attending = val;
         $('btn-yes').classList.toggle('active', val === 'yes');
         $('btn-no').classList.toggle('active', val === 'no');
+        $('btn-yes').setAttribute('aria-pressed', val === 'yes' ? 'true' : 'false');
+        $('btn-no').setAttribute('aria-pressed', val === 'no' ? 'true' : 'false');
         $('guests-group').style.display = val === 'yes' ? '' : 'none';
       }
       $('btn-yes').addEventListener('click', function () { setAttending('yes'); });
       $('btn-no').addEventListener('click', function () { setAttending('no'); });
 
-      // ---------- WISH COUNTER ----------
-      $('rsvp-wishes').addEventListener('input', function () {
-        $('wish-len').textContent = this.value.length;
-      });
-
-      // ---------- NAME ERROR CLEAR ----------
+      // ---------- WISH COUNTER + NAME ERROR ----------
+      $('rsvp-wishes').addEventListener('input', function () { $('wish-len').textContent = this.value.length; });
       $('rsvp-name').addEventListener('input', function () {
         $('name-error').hidden = true;
+        this.classList.remove('err');
       });
 
-      // ---------- PREFILL FROM URL ?guest= ----------
+      // ---------- PREFILL ?guest= ----------
       (function prefillName() {
         try {
           var guest = new URLSearchParams(window.location.search).get('guest');
-          if (guest && guest.length < 100 && !/<script|javascript:|on\w+=/i.test(guest)) {
-            $('rsvp-name').value = guest;
-          }
+          if (guest && guest.length < 100 && !/<script|javascript:|on\w+=/i.test(guest)) $('rsvp-name').value = guest;
         } catch (e) {}
       })();
 
-      // ---------- CONFIRMATION VIEW ----------
+      // ---------- CONFIRM VIEW ----------
       function showConfirm(name, attending, guests) {
         var who = (name || '').trim() || 'bạn';
         $('confirm-text').textContent = attending === 'yes'
-          ? 'Cảm ơn ' + who + '! Hẹn gặp bạn (' + guests + ' người) tại buổi lễ tốt nghiệp.'
-          : 'Cảm ơn ' + who + ' đã phản hồi. Rất tiếc vì bạn không thể tham dự cùng mình.';
+          ? 'Cảm ơn ' + who + '! Hẹn gặp bạn (' + guests + ' người) tại buổi lễ tốt nghiệp của Quang.'
+          : 'Cảm ơn ' + who + ' đã phản hồi. Rất tiếc vì bạn không thể tham dự cùng Quang.';
         $('rsvp-form').hidden = true;
         $('confirm-box').hidden = false;
         state.submitted = true;
       }
 
-      // ---------- SUBMIT ----------
       function saveLocal(data) {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) {}
       }
 
-      // ID cố định cho mỗi khách (giữ qua các lần sửa) → script ghi đè đúng dòng.
+      // ID cố định cho mỗi khách (giữ qua các lần sửa) → script Google ghi đè đúng dòng.
       function getOrCreateId() {
         try {
           var s = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
@@ -455,46 +482,41 @@
       }
 
       function sendToSheet(data) {
-        // Gửi dạng form-urlencoded (không bị CORS preflight). Dùng no-cors để
-        // không bị chặn đọc response — Apps Script vẫn ghi được dòng dữ liệu.
         var body = new URLSearchParams({
-          id: data.id,
-          name: data.name, attending: data.attending,
+          id: data.id, name: data.name, attending: data.attending,
           guests: data.attending === 'yes' ? data.guests : '0',
           wishes: data.wishes, timestamp: data.timestamp
         });
         return fetch(SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', body: body });
       }
 
+      // ---------- SUBMIT ----------
       $('btn-submit').addEventListener('click', function () {
         if (state.sending) return;
         var name = $('rsvp-name').value.trim();
-        if (!name) { $('name-error').hidden = false; $('rsvp-name').focus(); return; }
+        if (!name) {
+          $('name-error').hidden = false;
+          $('rsvp-name').classList.remove('err');
+          void $('rsvp-name').offsetWidth; // restart shake animation
+          $('rsvp-name').classList.add('err');
+          $('rsvp-name').focus();
+          return;
+        }
         var guests = $('rsvp-guests').value;
         var wishes = $('rsvp-wishes').value.slice(0, 500);
         var data = {
-          id: getOrCreateId(),
-          name: name, attending: state.attending, guests: guests, wishes: wishes,
-          timestamp: new Date().toISOString()
+          id: getOrCreateId(), name: name, attending: state.attending,
+          guests: guests, wishes: wishes, timestamp: new Date().toISOString()
         };
-
         $('submit-error').hidden = true;
 
-        // Chưa cấu hình endpoint → chỉ lưu trong trình duyệt (như trước).
-        if (!SHEET_ENDPOINT) {
-          saveLocal(data);
-          showConfirm(name, state.attending, guests);
-          return;
-        }
+        if (!SHEET_ENDPOINT) { saveLocal(data); showConfirm(name, state.attending, guests); return; }
 
-        // Có endpoint → gửi về Google Sheet.
         state.sending = true;
         $('btn-submit').disabled = true;
         $('submit-label').textContent = 'Đang gửi…';
-
         sendToSheet(data).then(function () {
-          saveLocal(data);
-          showConfirm(name, state.attending, guests);
+          saveLocal(data); showConfirm(name, state.attending, guests);
         }).catch(function () {
           $('submit-error').textContent = 'Chưa gửi được, bạn kiểm tra mạng và thử lại nhé.';
           $('submit-error').hidden = false;
@@ -512,7 +534,7 @@
         state.submitted = false;
       });
 
-      // ---------- RESTORE PREVIOUS RSVP ----------
+      // ---------- RESTORE ----------
       (function restore() {
         try {
           var s = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
@@ -535,10 +557,7 @@
           copyTimer = setTimeout(function () { $('copy-label').textContent = 'Sao chép liên kết'; }, 2200);
         }
         try {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(done, function () {});
-            return;
-          }
+          if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(done, function () {}); return; }
         } catch (e) {}
         try {
           var ta = document.createElement('textarea');
@@ -547,6 +566,9 @@
           done();
         } catch (e) {}
       });
+
+      // Nếu mở bằng thiết bị giảm chuyển động, hiện nội dung ngay.
+      if (reduceMotion) revealAll();
     })();
   </script>
 </body>
