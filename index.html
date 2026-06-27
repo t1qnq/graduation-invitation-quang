@@ -10,6 +10,13 @@
   <meta property="og:title" content="Thiệp mời Lễ Tốt Nghiệp · Quách Ngọc Quang">
   <meta property="og:description" content="10:00, Chủ Nhật 05/07/2026 · Hội trường Nguyễn Văn Đạo. Bấm để mở thiệp và xác nhận tham dự.">
   <meta property="og:image" content="https://t1qnq.github.io/graduation-invitation-quang/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://t1qnq.github.io/graduation-invitation-quang/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Thiệp mời Lễ Tốt Nghiệp · Quách Ngọc Quang">
+  <meta name="twitter:description" content="10:00, Chủ Nhật 05/07/2026 · Hội trường Nguyễn Văn Đạo. Bấm để mở thiệp và xác nhận tham dự.">
+  <meta name="twitter:image" content="https://t1qnq.github.io/graduation-invitation-quang/preview.png">
   <link rel="canonical" href="https://t1qnq.github.io/graduation-invitation-quang/">
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231f3a30' stroke='%23c2a25f' stroke-width='3'/><text x='50' y='65' text-anchor='middle' font-size='50'>🎓</text></svg>">
@@ -399,10 +406,14 @@
       function startReveal() {
         if (revealStarted) return;
         revealStarted = true;
-        if (reduceMotion || !('IntersectionObserver' in window)) { revealAll(); return; }
+        // Đã gửi rồi / giảm chuyển động → hiện hết, đông cứng, không mờ đi nữa.
+        if (reduceMotion || state.submitted || !('IntersectionObserver' in window)) { revealAll(); return; }
         var io = new IntersectionObserver(function (entries) {
+          // Sau khi đã gửi xác nhận: đông cứng, không bật/tắt nữa.
+          if (state.submitted) return;
           entries.forEach(function (en) {
-            if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+            // Hai chiều: vào khung hình thì hiện, cuộn ra ngoài thì mờ lại.
+            en.target.classList.toggle('in', en.isIntersecting);
           });
         }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
         document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
@@ -465,6 +476,7 @@
         $('rsvp-form').hidden = true;
         $('confirm-box').hidden = false;
         state.submitted = true;
+        revealAll(); // đã gửi → hiện hết & đông cứng, không mờ đi khi cuộn nữa
       }
 
       function saveLocal(data) {
